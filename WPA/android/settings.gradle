@@ -1,0 +1,3 @@
+rootProject.name = 'WPA'
+
+include ':app'
