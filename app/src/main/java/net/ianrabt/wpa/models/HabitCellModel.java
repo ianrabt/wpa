@@ -1,5 +1,4 @@
 package net.ianrabt.wpa.models;
-
 import android.arch.lifecycle.ViewModel;
 import java.util.Date;
 
