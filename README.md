@@ -10,7 +10,8 @@ Wellness and Productivity App
    Console](https://console.firebase.google.com) (you should have received an
    email invite from Michael)
    1. First run `keytool -exportcert -list -v -alias 'androiddebugkey' -keystore
-      ~/.android/debug.keystore` and copy the `SHA1` fingerprint which is
+      ~/.android/debug.keystore`. Use `android` as the password.
+   1. copy the `SHA1` fingerprint which is
       printed in the console.
    2. Then open the Firebase Console, and navigate to the **HabitTrackerWPA**
       project, use the sidebar to click the gear icon, and then click **Project
