@@ -6,25 +6,46 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import net.ianrabt.wpa.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HabitsActivity extends AppCompatActivity {
+
+    ListView listView;
+    List habitsList = new ArrayList();
+    ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
+        listView = (ListView)findViewById(R.id.list_view);
+
+        habitsList.add("item 1");
+        habitsList.add("item 2");
+        habitsList.add("item 3");
+        habitsList.add("item 4");
+        habitsList.add("item 5");
+        habitsList.add("item 6");
+        habitsList.add("item 7");
+        habitsList.add("item 8");
+        habitsList.add("item 9");
+        habitsList.add("item 10");
+        habitsList.add("item 11");
+        habitsList.add("item 12");
+        habitsList.add("item 13");
+        habitsList.add("item 14");
+        habitsList.add("item 15");
+
+        adapter = new ArrayAdapter(HabitsActivity.this, android.R.layout.simple_list_item_1, habitsList);
+        listView.setAdapter(adapter);
+
     }
 
 }
