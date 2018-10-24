@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import net.ianrabt.wpa.R;
 
@@ -27,25 +28,34 @@ public class HabitsActivity extends AppCompatActivity {
 
         listView = (ListView)findViewById(R.id.list_view);
 
-        habitsList.add("item 1");
-        habitsList.add("item 2");
-        habitsList.add("item 3");
-        habitsList.add("item 4");
-        habitsList.add("item 5");
-        habitsList.add("item 6");
-        habitsList.add("item 7");
-        habitsList.add("item 8");
-        habitsList.add("item 9");
-        habitsList.add("item 10");
-        habitsList.add("item 11");
-        habitsList.add("item 12");
-        habitsList.add("item 13");
-        habitsList.add("item 14");
-        habitsList.add("item 15");
-
-        adapter = new ArrayAdapter(HabitsActivity.this, android.R.layout.simple_list_item_1, habitsList);
+//        habitsList.add("item 1");
+//        habitsList.add("item 2");
+//        habitsList.add("item 3");
+//        habitsList.add("item 4");
+//        habitsList.add("item 5");
+//        habitsList.add("item 6");
+//        habitsList.add("item 7");
+//        habitsList.add("item 8");
+//        habitsList.add("item 9");
+//        habitsList.add("item 10");
+//        habitsList.add("item 11");
+//        habitsList.add("item 12");
+//        habitsList.add("item 13");
+//        habitsList.add("item 14");
+//        habitsList.add("item 15");
+//
+//        adapter = new ArrayAdapter(HabitsActivity.this, android.R.layout.simple_list_item_1, habitsList);
         listView.setAdapter(adapter);
 
     }
 
+    public void onCheckboxClicked(View view) {
+        View parent = (View) view.getParent();
+        TextView taskTextView = (TextView) parent.findViewById(R.id.task_title);
+        String task = String.valueOf(taskTextView.getText());
+
+        // Update streak counter
+
+        // TODO: send this information back to the database
+    }
 }
