@@ -26,7 +26,10 @@ public class HabitsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
 
-        listView = (ListView)findViewById(R.id.list_view);
+
+
+
+//        listView = (ListView)findViewById(R.id.list_view);
 
 //        habitsList.add("item 1");
 //        habitsList.add("item 2");
@@ -45,7 +48,7 @@ public class HabitsActivity extends AppCompatActivity {
 //        habitsList.add("item 15");
 //
 //        adapter = new ArrayAdapter(HabitsActivity.this, android.R.layout.simple_list_item_1, habitsList);
-        listView.setAdapter(adapter);
+//        listView.setAdapter(adapter);
 
     }
 
