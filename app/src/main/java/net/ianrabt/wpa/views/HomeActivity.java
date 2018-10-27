@@ -14,6 +14,8 @@ import net.ianrabt.wpa.FBRepositoryDelegate;
 import net.ianrabt.wpa.R;
 import net.ianrabt.wpa.Repository;
 import net.ianrabt.wpa.models.HabitModel;
+import net.ianrabt.wpa.models.CalendarsModel;
+
 
 import java.util.ArrayList;
 
@@ -28,6 +30,8 @@ public class HomeActivity extends AppCompatActivity implements FBRepositoryDeleg
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        CalendarsModel model = new CalendarsModel(getApplicationContext());
 
         Button btn = (Button)findViewById(R.id.sign_out_button);
         mAuth = FirebaseAuth.getInstance();
