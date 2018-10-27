@@ -26,7 +26,7 @@ public class FBRepository implements Repository {
 
        @Override
        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-           Object habit = dataSnapshot.getValue();
+           Object habit = dataSnapshot.getValue(HabitModel.class);
            System.out.println(habit);
            Log.d("tag", (String) habit);
        }
@@ -89,7 +89,7 @@ public class FBRepository implements Repository {
 
 
        query.addValueEventListener(new ValueEventListener() {
-           @Override 
+           @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                for (DataSnapshot habitSnapshot: dataSnapshot.getChildren()) {
                    HabitModel child = habitSnapshot.getValue(HabitModel.class);
