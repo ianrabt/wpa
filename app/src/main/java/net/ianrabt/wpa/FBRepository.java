@@ -26,7 +26,7 @@ public class FBRepository implements Repository {
 
        @Override
        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-           Object habit = dataSnapshot.getValue();
+           Object habit = dataSnapshot.getValue(HabitModel.class);
            System.out.println(habit);
            Log.d("tag", (String) habit);
        }
@@ -64,16 +64,18 @@ public class FBRepository implements Repository {
 //       Log.d("Sent", "MEssage sent");
    }
 
-   public void createHabit(){
-       String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+   public void createHabit(String habitName){
+       FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+       String id = user.getUid();
+       String author = user.getDisplayName();
        String key = mDatabase.child("habits").push().getKey();
-       Map<String, Object> habit = new HashMap<String, Object>();
-       habit.put("Name", "NewHabit");
+       HabitModel habit = new HabitModel(id, author, habitName);
+       Map<String, Object> habitValues = habit.toMap();
 
 
        Map<String, Object>child = new HashMap<String, Object>();
-       child.put("/habits/" + key, habit);
-       child.put("/userhabits/" + id + "/" + key, habit);
+       child.put("/habits/" + key, habitValues);
+       child.put("/userhabits/" + id + "/" + key, habitValues);
 
        mDatabase.updateChildren(child);
        //mDatabase.child("habit").child("name" ).setValue(habit);
@@ -89,8 +91,11 @@ public class FBRepository implements Repository {
        query.addValueEventListener(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               Object child = dataSnapshot.getValue(HabitModel.class);
-               Log.d("tag", String.valueOf(child));
+               for (DataSnapshot habitSnapshot: dataSnapshot.getChildren()) {
+                   HabitModel child = habitSnapshot.getValue(HabitModel.class);
+                   Log.d("tag", String.valueOf(child));
+               }
+
            }
 
            @Override
