@@ -112,6 +112,15 @@ public class FBRepository{
 
    }
 
+   public void incrementStreak(String habitId, Integer currentStreakValue){
+       //TODO: Read currentStreak from cell and increment
+       int currentStreak = 0;
+       FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+       String userId = currentUser.getUid();
+       mDatabase.child("userhabits").child(userId).child("-LPnqJwY8RtTG2Mi_b8h").child("streak_counter").setValue(1);
+       mDatabase.child("habits").child("-LPnqJwY8RtTG2Mi_b8h").child("streak_counter").setValue(1);
+   }
+
 
 }
 
