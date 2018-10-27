@@ -13,7 +13,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_habits" />
+    <include layout="@layout/habit_todo" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

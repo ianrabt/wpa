@@ -26,10 +26,10 @@ public class HabitItemAdapter extends ArrayAdapter<HabitCellModel>{
         habitsList = list;
     }
 
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View listItem = convertView;
+//    @NonNull
+//    @Override
+//    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+//        View listItem = convertView;
         //TODO: write this method for the habitcellmodel
 //        if(listItem == null)
 //            listItem = LayoutInflater.from(mContext).inflate(R.layout.list_item,parent,false);
@@ -46,6 +46,6 @@ public class HabitItemAdapter extends ArrayAdapter<HabitCellModel>{
 ////        release.setText(currentMovie.getmRelease());
 
 //        return listItem;
-    }
+//    }
 }
 

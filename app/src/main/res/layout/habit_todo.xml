@@ -6,46 +6,74 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp" >
 
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="23dp"
+        android:onClick="onCheckboxClicked"
+        android:scaleX="2"
+        android:scaleY="2" />
 
-        <EditText
-            android:id="@+id/habitName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="HabitName" />
+    <EditText
+        android:id="@+id/habitName"
+        android:layout_width="198dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/habitTimeRange"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="12dp"
+        android:layout_toRightOf="@+id/checkbox"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="text"
+        android:text="HabitName" />
 
 
-        <EditText
-            android:id="@+id/habitTimeRange"
-            android:layout_width="5dp"
-            android:layout_height="87dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="time"
-            android:layout_below="@id/habitName"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/streakCounter"/>
+    <EditText
+        android:id="@+id/habitTimeRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="-18dp"
+        android:layout_weight="1"
+        android:ems="9"
+        android:inputType="text"
+        android:text="2:00pm - 4:00pm"
+        android:textSize="13dp" />
 
 
-        <EditText
-            android:id="@+id/streakCounter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="number"
-            android:layout_below="@id/habitName"
-            android:layout_toLeftOf="@+id/streakFlame"
-            />
+    <EditText
+        android:id="@+id/streakCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/habitName"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="-18dp"
+        android:layout_toRightOf="@+id/habitTimeRange"
+        android:layout_weight="1"
+        android:ems="3"
+        android:inputType="text"
+        android:text="40000"
+        android:textSize="13dp" />
 
     <ImageView
         android:id="@+id/streakFlame"
         android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/habitName"
+        android:layout_marginStart="-10dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginTop="-6dp"
+        android:layout_toEndOf="@+id/streakCounter"
+        android:layout_toRightOf="@+id/streakCounter"
         android:layout_weight="1"
         app:srcCompat="@android:drawable/ic_notification_overlay" />
+
+
 
 </RelativeLayout>
