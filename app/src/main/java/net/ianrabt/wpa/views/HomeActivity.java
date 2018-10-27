@@ -51,6 +51,7 @@ public class HomeActivity extends AppCompatActivity implements FBRepositoryDeleg
         mRepository = new FBRepository(this);
         //mRepository.createHabit("anotherHabit");
         mRepository.getHabits();
+        mRepository.incrementStreak("fill", 0);
 
     }
 
