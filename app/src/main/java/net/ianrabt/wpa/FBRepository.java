@@ -15,13 +15,16 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import net.ianrabt.wpa.models.HabitModel;
+import net.ianrabt.wpa.views.HomeActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FBRepository implements Repository {
+public class FBRepository{
 
    private DatabaseReference mDatabase;
+   private HomeActivity mHome;
    private ChildEventListener mChildEventListener = new ChildEventListener() {
 
        @Override
@@ -53,7 +56,8 @@ public class FBRepository implements Repository {
        }
    };
 
-   public FBRepository() {
+   public FBRepository(HomeActivity home) {
+       this.mHome = home;
        this.mDatabase = FirebaseDatabase.getInstance().getReference();
    }
 
@@ -91,11 +95,12 @@ public class FBRepository implements Repository {
        query.addValueEventListener(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               ArrayList<HabitModel> habitList = new ArrayList<>();
                for (DataSnapshot habitSnapshot: dataSnapshot.getChildren()) {
                    HabitModel child = habitSnapshot.getValue(HabitModel.class);
-                   Log.d("tag", String.valueOf(child));
+                   habitList.add(habitSnapshot.getValue(HabitModel.class));
                }
-
+               mHome.handleHabitResponse(habitList);
            }
 
            @Override
@@ -103,6 +108,8 @@ public class FBRepository implements Repository {
                //log
            }
        });
+
+
    }
 
 
