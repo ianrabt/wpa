@@ -43,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         mRepository = new FBRepository();
+        mRepository.createHabit("defaultHabit");
         mRepository.getHabits();
 
     }
