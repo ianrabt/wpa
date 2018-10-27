@@ -9,12 +9,14 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import net.ianrabt.wpa.FBRepository;
 import net.ianrabt.wpa.R;
 
 public class HomeActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
+    private FBRepository mRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,10 @@ public class HomeActivity extends AppCompatActivity {
                 mAuth.signOut();
             }
         });
+
+        mRepository = new FBRepository();
+        mRepository.getHabits();
+
     }
 
     @Override
