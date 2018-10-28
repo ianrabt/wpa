@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,36 +17,53 @@ import net.ianrabt.wpa.models.HabitCellModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HabitItemAdapter extends ArrayAdapter<HabitCellModel>{
-    private Context mContext;
-    private List<HabitCellModel> habitsList = new ArrayList<>();
+public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyViewHolder> {
+    private String[] mDataset;
 
-    public HabitItemAdapter(@NonNull Context context, ArrayList<HabitCellModel> list) {
-        super(context, 0 , list);
-        mContext = context;
-        habitsList = list;
+    // Provide a reference to the views for each data item
+    // Complex data items may need more than one view per item, and
+    // you provide access to all the views for a data item in a view holder
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        // each data item is just a string in this case
+        public TextView mTextView;
+        public MyViewHolder(TextView v) {
+            super(v);
+            mTextView = v;
+        }
     }
 
-//    @NonNull
-//    @Override
-//    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        View listItem = convertView;
-        //TODO: write this method for the habitcellmodel
-//        if(listItem == null)
-//            listItem = LayoutInflater.from(mContext).inflate(R.layout.list_item,parent,false);
+    // Provide a suitable constructor (depends on the kind of dataset)
+    public HabitItemAdapter(String[] myDataset) {
+        mDataset = myDataset;
+    }
 
-//        Movie currentMovie = moviesList.get(position);
+    // Create new views (invoked by the layout manager)
+    @Override
+    public HabitItemAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+                                                     int viewType) {
+        // create a new view
+        TextView v = (TextView) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.activity_habits, parent, false);
+        MyViewHolder vh = new MyViewHolder(v);
+        return vh;
+    }
 
-//        ImageView image = (ImageView)listItem.findViewById(R.id.imageView_poster);
-//        image.setImageResource(currentMovie.getmImageDrawable());
+    // Replace the contents of a view (invoked by the layout manager)
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        // - get element from your dataset at this position
+        // - replace the contents of the view with that element
+        holder.mTextView.setText(mDataset[position]);
 
-//        TextView name = (TextView) listItem.findViewById(R.id.textView_name);
-////        name.setText(currentMovie.getmName());
-//
-//        TextView release = (TextView) listItem.findViewById(R.id.textView_release);
-////        release.setText(currentMovie.getmRelease());
+    }
 
-//        return listItem;
-//    }
+    // Return the size of your dataset (invoked by the layout manager)
+    @Override
+    public int getItemCount() {
+        return mDataset.length;
+    }
 }
+
+
+
 
