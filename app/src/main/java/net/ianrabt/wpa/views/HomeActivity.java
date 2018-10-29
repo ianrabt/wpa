@@ -12,10 +12,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import net.ianrabt.wpa.FBRepository;
 import net.ianrabt.wpa.FBRepositoryDelegate;
 import net.ianrabt.wpa.R;
-import net.ianrabt.wpa.Repository;
 import net.ianrabt.wpa.models.HabitModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements FBRepositoryDelegate{
 
@@ -49,9 +49,12 @@ public class HomeActivity extends AppCompatActivity implements FBRepositoryDeleg
         });
 
         mRepository = new FBRepository(this);
-        //mRepository.createHabit("anotherHabit");
-        mRepository.getHabits();
-        mRepository.incrementStreak("fill", 0);
+        List<Integer> days = new ArrayList<>();
+        days.add(2);
+        //mRepository.createHabit("otherhaaa", days, 1, 30);
+        mRepository.getHabitsByDay("2");
+        //mRepository.incrementStreak("fill", 0);
+
 
     }
 
