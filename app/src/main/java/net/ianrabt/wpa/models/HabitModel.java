@@ -16,6 +16,7 @@ public class HabitModel {
     private List<Integer> repeatsOnDays;
     private int hour;
     private int minute;
+    private boolean checked;
 
 
 
@@ -33,6 +34,7 @@ public class HabitModel {
         this.repeatsOnDays = repeatsOnDays;
         this.hour = hour;
         this.minute = minute;
+        this.checked = false;
     }
 
     // Getter Methods
@@ -64,6 +66,10 @@ public class HabitModel {
         return minute;
     }
 
+    public boolean isChecked() {
+        return checked;
+    }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
@@ -75,6 +81,7 @@ public class HabitModel {
         result.put("repeats_on_days", repeatsOnDays);
         result.put("hour", hour);
         result.put("minute", minute);
+        result.put("checked", checked);
 
         return result;
      }
