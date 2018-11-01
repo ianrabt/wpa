@@ -26,7 +26,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import net.ianrabt.wpa.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     SignInButton button;
     FirebaseAuth mAuth;
@@ -39,16 +39,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        button = (SignInButton) findViewById(R.id.sign_in_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                signIn();
-            }
-        });
+        findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         // Configure sign-in to request the user's ID, email address, and basic
-// profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -126,5 +120,14 @@ public class LoginActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.sign_in_button:
+                signIn();
+                break;
+        }
     }
 }

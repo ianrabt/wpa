@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import net.ianrabt.wpa.HabitItemAdapter;
 import net.ianrabt.wpa.R;
+import net.ianrabt.wpa.models.HabitCellModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
 public class HabitsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    String[] habitsList = new String[3];
+    HabitCellModel[] habitsList = new HabitCellModel[2];
     HabitItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -42,21 +43,11 @@ public class HabitsActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        habitsList[0] = "item 1";
-        habitsList[1] = "item 2";
-        habitsList[2] = "item 3";
-//        habitsList.add("item 4");
-//        habitsList.add("item 5");
-//        habitsList.add("item 6");
-//        habitsList.add("item 7");
-//        habitsList.add("item 8");
-//        habitsList.add("item 9");
-//        habitsList.add("item 10");
-//        habitsList.add("item 11");
-//        habitsList.add("item 12");
-//        habitsList.add("item 13");
-//        habitsList.add("item 14");
-//        habitsList.add("item 15");
+        // Hardcode a habit to test the list
+        java.util.Date date=new java.util.Date();
+        HabitCellModel habit1 = new HabitCellModel("workout", date);
+        habitsList[0] = habit1;
+        habitsList[1] = habit1;
 
         adapter = new HabitItemAdapter(habitsList);
 
@@ -65,13 +56,13 @@ public class HabitsActivity extends AppCompatActivity {
 
     }
 
-    public void onCheckboxClicked(View view) {
-        View parent = (View) view.getParent();
-        TextView taskTextView = (TextView) parent.findViewById(R.id.task_title);
-        String task = String.valueOf(taskTextView.getText());
-
-        // Update streak counter
-
-        // TODO: send this information back to the database
-    }
+//    public void onCheckboxClicked(View view) {
+////        View parent = (View) view.getParent();
+////        TextView taskTextView = (TextView) parent.findViewById(R.id.task_title);
+////        String task = String.valueOf(taskTextView.getText());
+//
+//        // Update streak counter
+//
+//        // TODO: send this information back to the database
+//    }
 }

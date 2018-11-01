@@ -24,7 +24,5 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <include layout="@layout/habit_todo" />
-
 
 </android.support.design.widget.CoordinatorLayout>
