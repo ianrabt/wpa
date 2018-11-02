@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ import java.util.List;
 public class HabitsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    HabitCellModel[] habitsList = new HabitCellModel[2];
+    HabitCellModel[] habitsList = new HabitCellModel[13];
     HabitItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -32,14 +33,11 @@ public class HabitsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_habits);
 
 
-
-
         recyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
@@ -48,21 +46,31 @@ public class HabitsActivity extends AppCompatActivity {
         HabitCellModel habit1 = new HabitCellModel("workout", date);
         habitsList[0] = habit1;
         habitsList[1] = habit1;
+        habitsList[2] = habit1;
+        habitsList[3] = habit1;
+        habitsList[4] = habit1;
+        habitsList[5] = habit1;
+        habitsList[6] = habit1;
+        habitsList[7] = habit1;
+        habitsList[8] = habit1;
+        habitsList[9] = habit1;
+        habitsList[10] = habit1;
+        habitsList[11] = habit1;
+        habitsList[12] = habit1;
 
         adapter = new HabitItemAdapter(habitsList);
-
-        // TODO: make an adapter for this recycler view
         recyclerView.setAdapter(adapter);
 
     }
 
 //    public void onCheckboxClicked(View view) {
-////        View parent = (View) view.getParent();
-////        TextView taskTextView = (TextView) parent.findViewById(R.id.task_title);
-////        String task = String.valueOf(taskTextView.getText());
+//        boolean checked = ((CheckBox) view).isChecked();
 //
 //        // Update streak counter
+//        if (checked) {
+//            // TODO: send this information back to the database
+//            // TODO: update the UI
+//        }
 //
-//        // TODO: send this information back to the database
 //    }
 }
