@@ -10,13 +10,19 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 
 import net.ianrabt.wpa.FBRepository;
+import net.ianrabt.wpa.FBRepositoryDelegate;
 import net.ianrabt.wpa.R;
+import net.ianrabt.wpa.Repository;
+import net.ianrabt.wpa.models.HabitModel;
 
-public class HomeActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class HomeActivity extends AppCompatActivity implements FBRepositoryDelegate{
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     private FBRepository mRepository;
+    private ArrayList<HabitModel> habitList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +48,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        mRepository = new FBRepository();
-        mRepository.createHabit();
+        mRepository = new FBRepository(this);
+        //mRepository.createHabit("anotherHabit");
+        mRepository.getHabits();
+        mRepository.incrementStreak("fill", 0);
+
+    }
+
+    public void handleHabitResponse(ArrayList<HabitModel> habitResponse){
+        this.habitList = habitResponse;
 
     }
 
