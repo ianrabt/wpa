@@ -72,7 +72,8 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
 
 //        holder.mCheckBox
         holder.mHabitName.setText((CharSequence) mDataset[position].getHabitName());
-        holder.mHabitTime.setText((CharSequence) mDataset[position].getHabitDate());
+//        holder.mHabitTime.setText((CharSequence) mDataset[position].getHabitDate());
+        holder.mHabitTime.setText("habit time");
         holder.mStreak.setText(String.valueOf(mDataset[position].getStreakCounter()));
 
     }
