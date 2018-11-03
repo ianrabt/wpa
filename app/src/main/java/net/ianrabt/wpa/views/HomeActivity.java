@@ -48,12 +48,12 @@ public class HomeActivity extends AppCompatActivity implements FBRepositoryDeleg
             }
         });
 
-        mRepository = new FBRepository(this);
+        //mRepository = new FBRepository(this);
         //List<Integer> days = new ArrayList<>();
        //days.add(2);
         //days.add(4);
         //mRepository.createHabit("aaa", days, 1, 30);
-        mRepository.getHabitsByDay("1");
+        //mRepository.getHabitsByDay("1");
         //mRepository.incrementStreak("fill", 0);
 
     }

@@ -37,6 +37,10 @@ public class HabitModel {
         this.checked = false;
     }
 
+    public HabitCellModel convertToHabitCellModel(HabitModel model){
+        return new HabitCellModel(model.name, new Date());
+    }
+
     // Getter Methods
     public String getAuthor() {
         return this.author;
@@ -76,9 +80,9 @@ public class HabitModel {
         result.put("uid", uid);
         result.put("author", author);
         result.put("name", name);
-        result.put("streak_counter", streakCounter);
+        result.put("streakCounter", streakCounter);
         result.put("completions", completions);
-        result.put("repeats_on_days", repeatsOnDays);
+        result.put("repeatsOnDays", repeatsOnDays);
         result.put("hour", hour);
         result.put("minute", minute);
         result.put("checked", checked);

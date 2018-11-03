@@ -1,5 +1,6 @@
 package net.ianrabt.wpa;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import net.ianrabt.wpa.models.HabitModel;
+import net.ianrabt.wpa.views.HabitsActivity;
 import net.ianrabt.wpa.views.HomeActivity;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import java.util.Map;
 public class FBRepository{
 
    private DatabaseReference mDatabase;
-   private HomeActivity mHome;
+   private HabitsActivity mHome;
    private ChildEventListener mChildEventListener = new ChildEventListener() {
 
        @Override
@@ -61,7 +63,7 @@ public class FBRepository{
        }
    };
 
-   public FBRepository(HomeActivity home) {
+   public FBRepository(HabitsActivity home) {
        this.mHome = home;
 
        this.mDatabase = FirebaseDatabase.getInstance().getReference();

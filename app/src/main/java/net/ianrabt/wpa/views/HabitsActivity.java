@@ -13,26 +13,32 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import net.ianrabt.wpa.FBRepository;
+import net.ianrabt.wpa.FBRepositoryDelegate;
 import net.ianrabt.wpa.HabitItemAdapter;
 import net.ianrabt.wpa.R;
 import net.ianrabt.wpa.models.HabitCellModel;
+import net.ianrabt.wpa.models.HabitModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HabitsActivity extends AppCompatActivity {
+public class HabitsActivity extends AppCompatActivity implements FBRepositoryDelegate {
 
     RecyclerView recyclerView;
-    HabitCellModel[] habitsList = new HabitCellModel[13];
+    ArrayList<HabitCellModel> habitsList = new ArrayList<HabitCellModel>();
     HabitItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private FBRepository mRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
 
+        mRepository = new FBRepository(this);
 
+        mRepository.getHabitsByDay("1");
         recyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -44,23 +50,17 @@ public class HabitsActivity extends AppCompatActivity {
         // Hardcode a habit to test the list
         java.util.Date date=new java.util.Date();
         HabitCellModel habit1 = new HabitCellModel("workout", date);
-        habitsList[0] = habit1;
-        habitsList[1] = habit1;
-        habitsList[2] = habit1;
-        habitsList[3] = habit1;
-        habitsList[4] = habit1;
-        habitsList[5] = habit1;
-        habitsList[6] = habit1;
-        habitsList[7] = habit1;
-        habitsList[8] = habit1;
-        habitsList[9] = habit1;
-        habitsList[10] = habit1;
-        habitsList[11] = habit1;
-        habitsList[12] = habit1;
 
         adapter = new HabitItemAdapter(habitsList);
         recyclerView.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void handleHabitResponse(ArrayList<HabitModel> habitResponse) {
+        for(int i =0; i < habitResponse.size(); i++){
+            habitsList.add(new HabitCellModel(habitResponse.get(i)));
+        }
     }
 
 //    public void onCheckboxClicked(View view) {
