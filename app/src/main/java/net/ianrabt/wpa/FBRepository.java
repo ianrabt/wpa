@@ -63,6 +63,7 @@ public class FBRepository{
 
    public FBRepository(HomeActivity home) {
        this.mHome = home;
+
        this.mDatabase = FirebaseDatabase.getInstance().getReference();
    }
 
@@ -159,6 +160,7 @@ public class FBRepository{
 
        Date currentTime = Calendar.getInstance().getTime();
    }
+
 
 
 }

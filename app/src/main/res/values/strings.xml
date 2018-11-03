@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WPA</string>
+    <string name="title_activity_habits">HabitsActivity</string>
 </resources>
