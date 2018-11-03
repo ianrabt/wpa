@@ -20,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import net.ianrabt.wpa.models.HabitModel;
 import net.ianrabt.wpa.views.HabitsActivity;
-import net.ianrabt.wpa.views.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -76,7 +75,7 @@ public class FBRepository{
        String id = user.getUid();
        String author = user.getDisplayName();
        String key = mDatabase.child("habits").push().getKey();
-       HabitModel habit = new HabitModel(id, author, habitName, repeatsOnDays, hour, minute);
+       HabitModel habit = new HabitModel(key, id, author, habitName, repeatsOnDays, hour, minute);
        Map<String, Object> habitValues = habit.toMap();
 
 
@@ -141,6 +140,7 @@ public class FBRepository{
                     habitList.add(child);
                 }
                 mHome.handleHabitResponse(habitList);
+                mHome.render();
             }
 
             @Override

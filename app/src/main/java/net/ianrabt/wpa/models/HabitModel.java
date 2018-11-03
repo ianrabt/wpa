@@ -10,6 +10,7 @@ import java.util.Map;
 public class HabitModel {
     private String uid;
     private String author;
+    private String habitId;
     private String name;
     private int streakCounter;
     private int completions;
@@ -25,9 +26,10 @@ public class HabitModel {
     }
 
 
-    public HabitModel(String uid, String author, String habitName, List<Integer> repeatsOnDays, int hour, int minute) {
+    public HabitModel(String habitId, String uid, String author, String habitName, List<Integer> repeatsOnDays, int hour, int minute) {
         this.uid = uid;
         this.author = author;
+        this.habitId = habitId;
         this.name = habitName;
         this.streakCounter = 0;
         this.completions = 0;
@@ -49,6 +51,8 @@ public class HabitModel {
     public String getUid() {
         return this.uid;
     }
+
+    public String getHabitId() { return habitId; }
 
     public String getName() {
         return this.name;

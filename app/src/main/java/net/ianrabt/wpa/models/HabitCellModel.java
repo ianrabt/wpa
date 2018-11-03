@@ -3,6 +3,7 @@ import android.arch.lifecycle.ViewModel;
 import java.util.Date;
 
 public class HabitCellModel extends ViewModel {
+    private String habitId;
     private String habitName;
     private int hour;
     private int minute;
@@ -16,6 +17,7 @@ public class HabitCellModel extends ViewModel {
     }
 
     public HabitCellModel(HabitModel model){
+        this.habitId = model.getHabitId();
         this.habitName = model.getName();
         this.hour = model.getHour();
         this.minute = model.getMinute();

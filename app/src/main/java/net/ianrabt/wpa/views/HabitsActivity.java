@@ -39,7 +39,18 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         mRepository = new FBRepository(this);
 
         mRepository.getHabitsByDay("1");
-        recyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
+
+    }
+
+    @Override
+    public void handleHabitResponse(ArrayList<HabitModel> habitResponse) {
+        for (int i = 0; i < habitResponse.size(); i++) {
+            habitsList.add(new HabitCellModel(habitResponse.get(i)));
+        }
+    }
+
+    public void render() {
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
@@ -47,25 +58,14 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        // Hardcode a habit to test the list
-        java.util.Date date=new java.util.Date();
-        HabitCellModel habit1 = new HabitCellModel("workout", date);
-
         adapter = new HabitItemAdapter(habitsList);
         recyclerView.setAdapter(adapter);
-
     }
 
-    @Override
-    public void handleHabitResponse(ArrayList<HabitModel> habitResponse) {
-        for(int i =0; i < habitResponse.size(); i++){
-            habitsList.add(new HabitCellModel(habitResponse.get(i)));
-        }
-    }
 
 //    public void onCheckboxClicked(View view) {
 //        boolean checked = ((CheckBox) view).isChecked();
-//
+//        mRepository.incrementStreak();
 //        // Update streak counter
 //        if (checked) {
 //            // TODO: send this information back to the database
@@ -74,3 +74,4 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
 //
 //    }
 }
+
