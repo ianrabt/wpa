@@ -1,12 +1,15 @@
 package net.ianrabt.wpa.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -26,6 +29,8 @@ public class HabitsActivity extends AppCompatActivity {
     HabitCellModel[] habitsList = new HabitCellModel[13];
     HabitItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private TextView textFavorites;
+    private TextView textSchedules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,30 @@ public class HabitsActivity extends AppCompatActivity {
         adapter = new HabitItemAdapter(habitsList);
         recyclerView.setAdapter(adapter);
 
+        // start the bottom navigation menu
+        textFavorites = (TextView) findViewById(R.id.text_favorites);
+        textSchedules = (TextView) findViewById(R.id.text_schedules);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_favorites:
+                                textFavorites.setVisibility(View.VISIBLE);
+                                textSchedules.setVisibility(View.GONE);
+                                break;
+                            case R.id.action_schedules:
+                                textFavorites.setVisibility(View.GONE);
+                                textSchedules.setVisibility(View.VISIBLE);
+                                break;
+                        }
+                        return false;
+                    }
+                });
     }
 
 //    public void onCheckboxClicked(View view) {
