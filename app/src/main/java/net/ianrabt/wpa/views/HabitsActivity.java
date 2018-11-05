@@ -16,29 +16,48 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import net.ianrabt.wpa.FBRepository;
+import net.ianrabt.wpa.FBRepositoryDelegate;
 import net.ianrabt.wpa.HabitItemAdapter;
 import net.ianrabt.wpa.R;
 import net.ianrabt.wpa.models.HabitCellModel;
+import net.ianrabt.wpa.models.HabitModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HabitsActivity extends AppCompatActivity {
+public class HabitsActivity extends AppCompatActivity implements FBRepositoryDelegate {
 
     RecyclerView recyclerView;
-    HabitCellModel[] habitsList = new HabitCellModel[13];
+    ArrayList<HabitCellModel> habitsList = new ArrayList<HabitCellModel>();
     HabitItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
     private TextView textFavorites;
     private TextView textSchedules;
+    private FBRepository mRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
 
+        mRepository = new FBRepository(this);
 
-        recyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
+        mRepository.getHabitsByDay("1");
+
+    }
+
+    @Override
+    public void handleHabitResponse(ArrayList<HabitModel> habitResponse) {
+        for (int i = 0; i < habitResponse.size(); i++) {
+            habitsList.add(new HabitCellModel(habitResponse.get(i)));
+        }
+    }
+
+    public void render() {
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
@@ -46,55 +65,15 @@ public class HabitsActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        // Hardcode a habit to test the list
-        java.util.Date date=new java.util.Date();
-        HabitCellModel habit1 = new HabitCellModel("workout", date);
-        habitsList[0] = habit1;
-        habitsList[1] = habit1;
-        habitsList[2] = habit1;
-        habitsList[3] = habit1;
-        habitsList[4] = habit1;
-        habitsList[5] = habit1;
-        habitsList[6] = habit1;
-        habitsList[7] = habit1;
-        habitsList[8] = habit1;
-        habitsList[9] = habit1;
-        habitsList[10] = habit1;
-        habitsList[11] = habit1;
-        habitsList[12] = habit1;
-
         adapter = new HabitItemAdapter(habitsList);
         recyclerView.setAdapter(adapter);
 
-        // start the bottom navigation menu
-        textFavorites = (TextView) findViewById(R.id.text_favorites);
-        textSchedules = (TextView) findViewById(R.id.text_schedules);
-
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_favorites:
-                                textFavorites.setVisibility(View.VISIBLE);
-                                textSchedules.setVisibility(View.GONE);
-                                break;
-                            case R.id.action_schedules:
-                                textFavorites.setVisibility(View.GONE);
-                                textSchedules.setVisibility(View.VISIBLE);
-                                break;
-                        }
-                        return false;
-                    }
-                });
     }
+
 
 //    public void onCheckboxClicked(View view) {
 //        boolean checked = ((CheckBox) view).isChecked();
-//
+//        mRepository.incrementStreak();
 //        // Update streak counter
 //        if (checked) {
 //            // TODO: send this information back to the database
@@ -103,3 +82,4 @@ public class HabitsActivity extends AppCompatActivity {
 //
 //    }
 }
+

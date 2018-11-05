@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyViewHolder> {
-    private HabitCellModel[] mDataset; // hold the habits data from db
+    private ArrayList<HabitCellModel> mDataset; // hold the habits data from db
 
 
     // Provide a reference to the views for each data item
@@ -46,7 +46,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public HabitItemAdapter(HabitCellModel[] myDataset) {
+    public HabitItemAdapter(ArrayList<HabitCellModel> myDataset) {
         mDataset = myDataset;
     }
 
@@ -71,17 +71,19 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         // holder is the UI element, position relates to the element in the list of tasks in the recycler view
 
 //        holder.mCheckBox
-        holder.mHabitName.setText((CharSequence) mDataset[position].getHabitName());
-//        holder.mHabitTime.setText((CharSequence) mDataset[position].getHabitDate());
-        holder.mHabitTime.setText("habit time");
-        holder.mStreak.setText(String.valueOf(mDataset[position].getStreakCounter()));
+        holder.mHabitName.setText((CharSequence) mDataset.get(position).getHabitName());
+        // Build the string to represent the habit time
+        // TODO: implement time range
+        String habitTime = mDataset.get(position).getHour() + ":" + mDataset.get(position).getMinute();
+        holder.mHabitTime.setText(habitTime);
+        holder.mStreak.setText(String.valueOf(mDataset.get(position).getStreakCounter()));
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }
 
