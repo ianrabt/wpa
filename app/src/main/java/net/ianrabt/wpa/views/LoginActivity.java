@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
+            //move from LoginActivity to HabitsActivity
             startActivity(new Intent(LoginActivity.this, HabitsActivity.class));
         }
     }
@@ -108,6 +109,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             FirebaseUser user = mAuth.getCurrentUser();
                             //updateUI(user);
                             if(user != null){
+                                //move from LoginActivity to HabitsActivity
                                 startActivity(new Intent(LoginActivity.this, HabitsActivity.class));
                             }
                         } else {
