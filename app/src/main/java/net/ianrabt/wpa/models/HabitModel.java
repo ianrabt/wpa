@@ -10,6 +10,7 @@ import java.util.Map;
 public class HabitModel {
     private String uid;
     private String author;
+    private String habitId;
     private String name;
     private int streakCounter;
     private int completions;
@@ -25,9 +26,10 @@ public class HabitModel {
     }
 
 
-    public HabitModel(String uid, String author, String habitName, List<Integer> repeatsOnDays, int hour, int minute) {
+    public HabitModel(String habitId, String uid, String author, String habitName, List<Integer> repeatsOnDays, int hour, int minute) {
         this.uid = uid;
         this.author = author;
+        this.habitId = habitId;
         this.name = habitName;
         this.streakCounter = 0;
         this.completions = 0;
@@ -35,6 +37,10 @@ public class HabitModel {
         this.hour = hour;
         this.minute = minute;
         this.checked = false;
+    }
+
+    public HabitCellModel convertToHabitCellModel(HabitModel model){
+        return new HabitCellModel(model.name, new Date());
     }
 
     // Getter Methods
@@ -45,6 +51,8 @@ public class HabitModel {
     public String getUid() {
         return this.uid;
     }
+
+    public String getHabitId() { return habitId; }
 
     public String getName() {
         return this.name;
@@ -76,9 +84,9 @@ public class HabitModel {
         result.put("uid", uid);
         result.put("author", author);
         result.put("name", name);
-        result.put("streak_counter", streakCounter);
+        result.put("streakCounter", streakCounter);
         result.put("completions", completions);
-        result.put("repeats_on_days", repeatsOnDays);
+        result.put("repeatsOnDays", repeatsOnDays);
         result.put("hour", hour);
         result.put("minute", minute);
         result.put("checked", checked);

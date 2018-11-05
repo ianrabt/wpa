@@ -1,5 +1,6 @@
 package net.ianrabt.wpa;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -18,7 +19,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import net.ianrabt.wpa.models.HabitModel;
-import net.ianrabt.wpa.views.HomeActivity;
+import net.ianrabt.wpa.views.HabitsActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +30,7 @@ import java.util.Map;
 public class FBRepository{
 
    private DatabaseReference mDatabase;
-   private HomeActivity mHome;
+   private HabitsActivity mHome;
    private ChildEventListener mChildEventListener = new ChildEventListener() {
 
        @Override
@@ -61,7 +62,7 @@ public class FBRepository{
        }
    };
 
-   public FBRepository(HomeActivity home) {
+   public FBRepository(HabitsActivity home) {
        this.mHome = home;
 
        this.mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -74,7 +75,7 @@ public class FBRepository{
        String id = user.getUid();
        String author = user.getDisplayName();
        String key = mDatabase.child("habits").push().getKey();
-       HabitModel habit = new HabitModel(id, author, habitName, repeatsOnDays, hour, minute);
+       HabitModel habit = new HabitModel(key, id, author, habitName, repeatsOnDays, hour, minute);
        Map<String, Object> habitValues = habit.toMap();
 
 
@@ -139,6 +140,7 @@ public class FBRepository{
                     habitList.add(child);
                 }
                 mHome.handleHabitResponse(habitList);
+                mHome.render();
             }
 
             @Override
