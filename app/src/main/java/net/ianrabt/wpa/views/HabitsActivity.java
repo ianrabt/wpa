@@ -51,6 +51,7 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
         Button addHabit = findViewById(R.id.add_button);
+        //***CURRENTLY CAUSES CRASH ***
         addHabit.setOnClickListener(this);
 
         mRepository = new FBRepository(this);
