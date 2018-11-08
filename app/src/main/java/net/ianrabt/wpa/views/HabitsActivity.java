@@ -20,12 +20,20 @@ import net.ianrabt.wpa.R;
 import net.ianrabt.wpa.models.HabitCellModel;
 import net.ianrabt.wpa.models.HabitModel;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HabitsActivity extends AppCompatActivity implements FBRepositoryDelegate {
 
     RecyclerView recyclerView;
+    private TextView dayTextView;
+    private TextView emptyView;
+    private Calendar sCalendar = Calendar.getInstance();
     ArrayList<HabitCellModel> habitsList = new ArrayList<HabitCellModel>();
     HabitItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -38,7 +46,8 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
 
         mRepository = new FBRepository(this);
 
-        mRepository.getHabitsByDay("1");
+        String day = Integer.toString(sCalendar.get(Calendar.DAY_OF_WEEK));
+        mRepository.getHabitsByDay(day);
 
     }
 
@@ -50,6 +59,7 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
     }
 
     public void render() {
+        emptyView = (TextView) findViewById(R.id.empty_view);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -60,7 +70,23 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
 
         adapter = new HabitItemAdapter(habitsList);
         recyclerView.setAdapter(adapter);
+
+        String dayLongName = sCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+        recyclerView.addItemDecoration(new HeaderViewDecoration(this,
+                recyclerView,  R.layout.habit_header, dayLongName));
+
+        if (habitsList.isEmpty()){
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else{
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
+
     }
+
+
 
 
 //    public void onCheckboxClicked(View view) {
