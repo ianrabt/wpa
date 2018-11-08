@@ -1,5 +1,6 @@
 package net.ianrabt.wpa.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,9 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.ianrabt.wpa.FBRepository;
 import net.ianrabt.wpa.FBRepositoryDelegate;
@@ -19,13 +22,20 @@ import net.ianrabt.wpa.HabitItemAdapter;
 import net.ianrabt.wpa.R;
 import net.ianrabt.wpa.models.HabitCellModel;
 import net.ianrabt.wpa.models.HabitModel;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.PlaceDetectionClient;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class HabitsActivity extends AppCompatActivity implements FBRepositoryDelegate {
+public class HabitsActivity extends AppCompatActivity implements FBRepositoryDelegate, View.OnClickListener {
 
+    int PLACE_PICKER_REQUEST = 1;
     RecyclerView recyclerView;
     private TextView dayTextView;
     private TextView emptyView;
@@ -35,10 +45,13 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
     private RecyclerView.LayoutManager mLayoutManager;
     private FBRepository mRepository;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
+        Button addHabit = findViewById(R.id.add_button);
+        addHabit.setOnClickListener(this);
 
         mRepository = new FBRepository(this);
 
@@ -80,6 +93,39 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
             emptyView.setVisibility(View.GONE);
         }
 
+
+    }
+
+    private void showPlacePicker(){
+
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.add_button:
+                Intent newActivity = new Intent(this, CreateHabitActivity.class);
+                startActivity(newActivity);
+                break;
+        }
     }
 
 
