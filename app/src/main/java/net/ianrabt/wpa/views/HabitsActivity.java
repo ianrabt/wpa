@@ -20,12 +20,8 @@ import net.ianrabt.wpa.R;
 import net.ianrabt.wpa.models.HabitCellModel;
 import net.ianrabt.wpa.models.HabitModel;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class HabitsActivity extends AppCompatActivity implements FBRepositoryDelegate {
@@ -85,8 +81,6 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         }
 
     }
-
-
 
 
 //    public void onCheckboxClicked(View view) {
