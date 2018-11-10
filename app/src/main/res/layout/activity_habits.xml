@@ -32,7 +32,7 @@
         android:text="No habits created for this day. Create more a habit by clicking the + button!" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_button"
+        android:id="@+id/create"
         android:src="@drawable/plus"
         app:fabSize="normal"
         android:layout_width="wrap_content"

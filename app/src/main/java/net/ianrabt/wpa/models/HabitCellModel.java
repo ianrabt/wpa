@@ -5,8 +5,7 @@ import java.util.Date;
 public class HabitCellModel extends ViewModel {
     private String habitId;
     private String habitName;
-    private int hour;
-    private int minute;
+    private String time;
     private boolean checked;
     private int streakCounter;
 
@@ -19,8 +18,7 @@ public class HabitCellModel extends ViewModel {
     public HabitCellModel(HabitModel model){
         this.habitId = model.getHabitId();
         this.habitName = model.getName();
-        this.hour = model.getHour();
-        this.minute = model.getMinute();
+        this.time = model.getTime();
         this.checked = model.isChecked();
         this.streakCounter = model.getStreakCounter();
     }
@@ -30,9 +28,7 @@ public class HabitCellModel extends ViewModel {
         return this.habitName;
     }
 
-    public int getHour() { return this.hour; }
-
-    public int getMinute() { return minute; }
+    public String getTime() { return this.time; }
 
     public boolean isChecked() { return checked; }
 

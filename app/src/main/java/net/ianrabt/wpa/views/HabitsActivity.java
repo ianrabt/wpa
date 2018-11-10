@@ -50,11 +50,10 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
-        Button addHabit = findViewById(R.id.add_button);
-        //***CURRENTLY CAUSES CRASH ***
-        addHabit.setOnClickListener(this);
 
-        mRepository = new FBRepository(this);
+
+
+        mRepository = new FBRepository(this, null);
 
         String day = Integer.toString(sCalendar.get(Calendar.DAY_OF_WEEK));
         mRepository.getHabitsByDay(day);
@@ -94,6 +93,10 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
             emptyView.setVisibility(View.GONE);
         }
 
+        FloatingActionButton addHabit = (FloatingActionButton) findViewById(R.id.create);
+        recyclerView.setVisibility(View.VISIBLE);
+        addHabit.setOnClickListener(this);
+
 
     }
 
@@ -122,10 +125,11 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.add_button:
+            case R.id.create:
                 Intent newActivity = new Intent(this, CreateHabitActivity.class);
                 startActivity(newActivity);
                 break;
+
         }
     }
 
