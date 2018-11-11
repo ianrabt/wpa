@@ -111,4 +111,14 @@
         app:layout_constraintStart_toEndOf="@+id/habit_name_text"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/add_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="110dp"
+        android:text="Add Location"
+        app:layout_constraintStart_toEndOf="@+id/time_text"
+        app:layout_constraintTop_toBottomOf="@+id/sunday" />
+
 </android.support.constraint.ConstraintLayout>

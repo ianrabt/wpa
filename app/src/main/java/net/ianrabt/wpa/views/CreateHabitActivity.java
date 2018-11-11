@@ -1,6 +1,7 @@
 package net.ianrabt.wpa.views;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import net.ianrabt.wpa.FBRepository;
 import net.ianrabt.wpa.R;
@@ -20,15 +25,9 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
 
     TextView timeText;
     TextView habitNameText;
-//    CheckBox monday;
-//    CheckBox sunday;
-//    CheckBox tuesday;
-//    CheckBox wednesday;
-//    CheckBox thursday;
-//    CheckBox friday;
-//    CheckBox saturday;
     private ArrayList<CheckBox> days = new ArrayList<>();
     FBRepository mRepository;
+    int PLACE_PICKER_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +38,8 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         timeText.setOnClickListener(this);
         habitNameText.setOnClickListener(this);
         Button create = (Button) findViewById(R.id.create);
+        Button addLocation = (Button) findViewById(R.id.add_location);
+        addLocation.setOnClickListener(this);
         create.setOnClickListener(this);
         CheckBox monday = (CheckBox) findViewById(R.id.monday);
         CheckBox sunday = (CheckBox) findViewById(R.id.sunday);
@@ -119,6 +120,28 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         return 0;
     }
 
+    private void showPlacePicker(){
+
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
@@ -127,6 +150,11 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.create:
                 uploadHabit();
+                Intent newActivity = new Intent(this, HabitsActivity.class);
+                startActivity(newActivity);
+                break;
+            case R.id.add_location:
+                showPlacePicker();
                 break;
         }
     }
