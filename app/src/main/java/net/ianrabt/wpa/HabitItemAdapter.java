@@ -74,8 +74,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         holder.mHabitName.setText((CharSequence) mDataset.get(position).getHabitName());
         // Build the string to represent the habit time
         // TODO: implement time range
-        String habitTime = mDataset.get(position).getHour() + ":" + mDataset.get(position).getMinute();
-        holder.mHabitTime.setText(habitTime);
+        holder.mHabitTime.setText(mDataset.get(position).getTime());
         holder.mStreak.setText(String.valueOf(mDataset.get(position).getStreakCounter()));
 
     }

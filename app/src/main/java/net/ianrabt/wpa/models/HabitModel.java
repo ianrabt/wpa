@@ -15,8 +15,7 @@ public class HabitModel {
     private int streakCounter;
     private int completions;
     private List<Integer> repeatsOnDays;
-    private int hour;
-    private int minute;
+    private String time;
     private boolean checked;
 
 
@@ -26,7 +25,7 @@ public class HabitModel {
     }
 
 
-    public HabitModel(String habitId, String uid, String author, String habitName, List<Integer> repeatsOnDays, int hour, int minute) {
+    public HabitModel(String habitId, String uid, String author, String habitName, List<Integer> repeatsOnDays, String time) {
         this.uid = uid;
         this.author = author;
         this.habitId = habitId;
@@ -34,8 +33,7 @@ public class HabitModel {
         this.streakCounter = 0;
         this.completions = 0;
         this.repeatsOnDays = repeatsOnDays;
-        this.hour = hour;
-        this.minute = minute;
+        this.time = time;
         this.checked = false;
     }
 
@@ -66,13 +64,7 @@ public class HabitModel {
 
     public List<Integer> getRepeatsOnDays() { return repeatsOnDays; }
 
-    public int getHour() {
-        return hour;
-    }
-
-    public int getMinute() {
-        return minute;
-    }
+    public String getTime() { return time; }
 
     public boolean isChecked() {
         return checked;
@@ -87,8 +79,7 @@ public class HabitModel {
         result.put("streakCounter", streakCounter);
         result.put("completions", completions);
         result.put("repeatsOnDays", repeatsOnDays);
-        result.put("hour", hour);
-        result.put("minute", minute);
+        result.put("time", time);
         result.put("checked", checked);
 
         return result;

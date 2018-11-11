@@ -31,5 +31,15 @@
         android:visibility="gone"
         android:text="No habits created for this day. Create more a habit by clicking the + button!" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/create"
+        android:src="@drawable/plus"
+        app:fabSize="normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        app:layout_anchor="@id/my_recycler_view"
+        app:layout_anchorGravity="bottom|right|end"/>
 
 </android.support.design.widget.CoordinatorLayout>

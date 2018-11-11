@@ -1,16 +1,12 @@
 package net.ianrabt.wpa.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import net.ianrabt.wpa.FBRepository;
@@ -24,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class HabitsActivity extends AppCompatActivity implements FBRepositoryDelegate {
+public class HabitsActivity extends AppCompatActivity implements FBRepositoryDelegate, View.OnClickListener {
 
     RecyclerView recyclerView;
     private TextView dayTextView;
@@ -35,12 +31,15 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
     private RecyclerView.LayoutManager mLayoutManager;
     private FBRepository mRepository;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
 
-        mRepository = new FBRepository(this);
+
+
+        mRepository = new FBRepository(this, null);
 
         String day = Integer.toString(sCalendar.get(Calendar.DAY_OF_WEEK));
         mRepository.getHabitsByDay(day);
@@ -80,6 +79,23 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
             emptyView.setVisibility(View.GONE);
         }
 
+        FloatingActionButton addHabit = (FloatingActionButton) findViewById(R.id.create);
+        recyclerView.setVisibility(View.VISIBLE);
+        addHabit.setOnClickListener(this);
+
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.create:
+                Intent newActivity = new Intent(this, CreateHabitActivity.class);
+                startActivity(newActivity);
+                break;
+
+        }
     }
 
 

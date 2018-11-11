@@ -19,6 +19,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import net.ianrabt.wpa.models.HabitModel;
+import net.ianrabt.wpa.views.CreateHabitActivity;
 import net.ianrabt.wpa.views.HabitsActivity;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class FBRepository{
 
    private DatabaseReference mDatabase;
    private HabitsActivity mHome;
+   private CreateHabitActivity mCreate;
    private ChildEventListener mChildEventListener = new ChildEventListener() {
 
        @Override
@@ -62,20 +64,21 @@ public class FBRepository{
        }
    };
 
-   public FBRepository(HabitsActivity home) {
+   public FBRepository(HabitsActivity home, CreateHabitActivity create) {
        this.mHome = home;
+       this.mCreate = create;
 
        this.mDatabase = FirebaseDatabase.getInstance().getReference();
    }
 
 
 
-   public void createHabit(String habitName, List<Integer> repeatsOnDays, int hour, int minute){
+   public void createHabit(String habitName, List<Integer> repeatsOnDays, String time){
        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
        String id = user.getUid();
        String author = user.getDisplayName();
        String key = mDatabase.child("habits").push().getKey();
-       HabitModel habit = new HabitModel(key, id, author, habitName, repeatsOnDays, hour, minute);
+       HabitModel habit = new HabitModel(key, id, author, habitName, repeatsOnDays, time);
        Map<String, Object> habitValues = habit.toMap();
 
 
