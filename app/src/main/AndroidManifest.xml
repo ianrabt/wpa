@@ -24,7 +24,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBiJGqr-dfrHrlP7gJdWyBI6zW9BTkHDb8" />
+            android:value="@string/api_key"/>
 
         <activity android:name=".views.CreateHabitActivity"></activity>
     </application>
