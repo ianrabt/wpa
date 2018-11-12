@@ -38,6 +38,15 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
 
         mRepository = new FBRepository(this);
 
+        // Create habits to use for testing
+        List<Integer> repeatDays = new ArrayList<>(2);
+        repeatDays.add(1);
+        repeatDays.add(2);
+
+        mRepository.createHabit("workout", repeatDays, 1, 15);
+        mRepository.createHabit("drink water", repeatDays, 1, 55);
+        mRepository.createHabit("sleep 8 hrs", repeatDays, 2, 30);
+
         mRepository.getHabitsByDay("1");
 
     }
@@ -63,15 +72,31 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
     }
 
 
-//    public void onCheckboxClicked(View view) {
+    public void onCheckboxClicked(View view) {
 //        boolean checked = ((CheckBox) view).isChecked();
-//        mRepository.incrementStreak();
+//        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        Integer habitID = view.getId();
+        // the id is the same when different checkboxes are clicked...
+
+            // TODO: get the habit ID... map the checkbox id to the particular habit id
+//        adapter = new HabitItemAdapter(habitsList);
+//        recyclerView.setAdapter(adapter);
+//        int adapterPosition = recyclerView.getAdapterPosition();
+//        if (items.get(adapterPosition).getChecked()) {
+//            mCheckedTextView.setChecked(false);
+//            items.get(adapterPosition).setChecked(false);
+//        }
+//        else {
+//            mCheckedTextView.setChecked(true);
+//            items.get(adapterPosition).setChecked(true);
+//        }
+////        mRepository.incrementStreak(habitID, 8);
 //        // Update streak counter
 //        if (checked) {
 //            // TODO: send this information back to the database
 //            // TODO: update the UI
-//        }
-//
 //    }
+
+    }
 }
 

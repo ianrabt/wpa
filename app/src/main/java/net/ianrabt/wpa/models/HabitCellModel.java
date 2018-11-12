@@ -26,6 +26,8 @@ public class HabitCellModel extends ViewModel {
     }
 
     /* Getter Methods */
+    public String getHabitId() {return  this.habitId; }
+
     public String getHabitName() {
         return this.habitName;
     }

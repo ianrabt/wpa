@@ -1,27 +1,18 @@
 package net.ianrabt.wpa;
 
-import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.ianrabt.wpa.models.HabitCellModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyViewHolder> {
     private ArrayList<HabitCellModel> mDataset; // hold the habits data from db
-
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -31,6 +22,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         public TextView mHabitName;
         public TextView mHabitTime;
         public TextView mStreak;
+
 
         public MyViewHolder(View itemView){
             super(itemView);
@@ -42,10 +34,10 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
 
         }
 
-
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+
+    // Provide a suitable constructor
     public HabitItemAdapter(ArrayList<HabitCellModel> myDataset) {
         mDataset = myDataset;
     }
@@ -62,9 +54,13 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
 
     }
 
+    public String getId(int position){
+        return mDataset.get(position).getHabitId();
+    }
+
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 //        holder.mTextView.setText(mDataset[position]);
@@ -72,12 +68,17 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
 
 //        holder.mCheckBox
         holder.mHabitName.setText((CharSequence) mDataset.get(position).getHabitName());
-        // Build the string to represent the habit time
-        // TODO: implement time range
         String habitTime = mDataset.get(position).getHour() + ":" + mDataset.get(position).getMinute();
         holder.mHabitTime.setText(habitTime);
         holder.mStreak.setText(String.valueOf(mDataset.get(position).getStreakCounter()));
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id = view.getId(position);
+                //You can call detail fragment here
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -85,8 +86,8 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
     public int getItemCount() {
         return mDataset.size();
     }
-}
 
+}
 
 
 
