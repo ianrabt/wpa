@@ -39,7 +39,8 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
 
 
 
-        mRepository = new FBRepository(this, null);
+        mRepository = new FBRepository();
+        mRepository.setDelegate(this);
 
         String day = Integer.toString(sCalendar.get(Calendar.DAY_OF_WEEK));
         mRepository.getHabitsByDay(day);
