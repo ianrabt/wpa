@@ -21,3 +21,5 @@ Wellness and Productivity App
    4. Now, authentication will not fail on the APKs you build. (**TODO:** *Is
       this the best way to set up developer keys for this project?*)
 3. You should now be able to build and run the app as usual!
+4. To make sure that the Google services run correctly make sure you add your own Google maps API key to gradle.properties and make sure you have your own API key in the google-services.json
+
