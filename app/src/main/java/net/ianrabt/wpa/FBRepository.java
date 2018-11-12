@@ -31,49 +31,17 @@ import java.util.Map;
 public class FBRepository{
 
    private DatabaseReference mDatabase;
-   private HabitsActivity mHome;
-   private CreateHabitActivity mCreate;
-   private ChildEventListener mChildEventListener = new ChildEventListener() {
+   private FBRepositoryDelegate delegate;
 
-       @Override
-       public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-           Object habit = dataSnapshot.getValue(HabitModel.class);
-           System.out.println(habit);
-           Log.d("tag", (String) habit);
-       }
-
-       @Override
-       public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            Object habit = dataSnapshot.getValue();
-       }
-
-       @Override
-       public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            Object habit = dataSnapshot.getKey();
-       }
-
-       @Override
-       public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            Object habit = dataSnapshot.getValue();
-
-       }
-
-       @Override
-       public void onCancelled(@NonNull DatabaseError databaseError) {
-            //chill
-       }
-   };
-
-   public FBRepository(HabitsActivity home, CreateHabitActivity create) {
-       this.mHome = home;
-       this.mCreate = create;
-
+   public FBRepository() {
        this.mDatabase = FirebaseDatabase.getInstance().getReference();
    }
 
+    public void setDelegate(FBRepositoryDelegate delegate) {
+        this.delegate = delegate;
+    }
 
-
-   public void createHabit(String habitName, List<Integer> repeatsOnDays, String time){
+    public void createHabit(String habitName, List<Integer> repeatsOnDays, String time){
        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
        String id = user.getUid();
        String author = user.getDisplayName();
@@ -93,11 +61,9 @@ public class FBRepository{
 
 
        mDatabase.updateChildren(child);
-       //mDatabase.child("habit").child("name" ).setValue(habit);
    }
 
    public void getHabits(){
-       //mDatabase.addChildEventListener(mChildEventListener);
        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
        String userId = currentUser.getUid();
        Query query = mDatabase.child("userhabits").child(userId);
@@ -113,7 +79,7 @@ public class FBRepository{
                    List<Integer> days = habitSnapshot.child("repeats_on_days").getValue(t);
                    habitList.add(child);
                }
-               mHome.handleHabitResponse(habitList);
+               delegate.handleHabitResponse(habitList);
            }
 
            @Override
@@ -142,8 +108,8 @@ public class FBRepository{
                     List<Integer> days = habitSnapshot.child("repeats_on_days").getValue(t);
                     habitList.add(child);
                 }
-                mHome.handleHabitResponse(habitList);
-                mHome.render();
+                delegate.handleHabitResponse(habitList);
+                delegate.render();
             }
 
             @Override

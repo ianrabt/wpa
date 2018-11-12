@@ -62,7 +62,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         friday.setOnClickListener(this);
         saturday.setOnClickListener(this);
         sunday.setOnClickListener(this);
-        mRepository = new FBRepository(null, this);
+        mRepository = new FBRepository();
     }
 
 
