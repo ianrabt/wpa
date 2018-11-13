@@ -1,5 +1,4 @@
 package net.ianrabt.wpa.models;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
@@ -18,8 +17,6 @@ public class HabitModel {
     private List<Integer> repeatsOnDays;
     private String time;
     private boolean checked;
-    private double lat;
-    private double lon;
 
 
 
@@ -28,7 +25,7 @@ public class HabitModel {
     }
 
 
-    public HabitModel(String habitId, String uid, String author, String habitName, List<Integer> repeatsOnDays, String time, Double lat, Double lon) {
+    public HabitModel(String habitId, String uid, String author, String habitName, List<Integer> repeatsOnDays, String time) {
         this.uid = uid;
         this.author = author;
         this.habitId = habitId;
@@ -38,8 +35,6 @@ public class HabitModel {
         this.repeatsOnDays = repeatsOnDays;
         this.time = time;
         this.checked = false;
-        this.lat = lat;
-        this.lon = lon;
     }
 
     public HabitCellModel convertToHabitCellModel(HabitModel model){
@@ -75,10 +70,6 @@ public class HabitModel {
         return checked;
     }
 
-    public double getLat() { return lat; }
-
-    public double getLon() { return lon; }
-
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
@@ -90,8 +81,6 @@ public class HabitModel {
         result.put("repeatsOnDays", repeatsOnDays);
         result.put("time", time);
         result.put("checked", checked);
-        result.put("lat",lat);
-        result.put("lon", lon);
 
         return result;
      }

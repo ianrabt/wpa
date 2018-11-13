@@ -11,15 +11,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.model.LatLng;
+
 import net.ianrabt.wpa.FBRepository;
 import net.ianrabt.wpa.R;
 import net.ianrabt.wpa.Repository;
 
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -30,9 +28,6 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
     private ArrayList<CheckBox> days = new ArrayList<>();
     FBRepository mRepository;
     int PLACE_PICKER_REQUEST = 1;
-    private Double lat;
-    private Double lon;
-    LatLng latlng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +87,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         String name = habitNameText.getText().toString();
         ArrayList<Integer> days = getDays();
         String time = timeText.getText().toString();
-        mRepository.createHabit(name,days,time, lat, lon);
+        mRepository.createHabit(name,days,time);
     }
 
     private ArrayList<Integer> getDays(){
@@ -126,6 +121,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void showPlacePicker(){
+
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
             startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
@@ -140,15 +136,11 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                LatLng chosenPlace = place.getLatLng();
-                lat = chosenPlace.latitude;
-                lon = chosenPlace.longitude;
                 String toastMsg = String.format("Place: %s", place.getName());
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
         }
     }
-
 
     @Override
     public void onClick(View v) {
