@@ -71,6 +71,6 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         recyclerView.setAdapter(adapter);
     }
 
-    
+
 }
 

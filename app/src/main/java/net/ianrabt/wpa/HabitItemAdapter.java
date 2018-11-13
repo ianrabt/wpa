@@ -63,26 +63,22 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-//        holder.mTextView.setText(mDataset[position]);
-        // holder is the UI element, position relates to the element in the list of tasks in the recycler view
-
-//        holder.mCheckBox
+//        // holder is the UI element, position relates to the element in the list of tasks in the recycler view
+//        // **** Currently causes program to crash ****
         holder.mHabitName.setText((CharSequence) mDataset.get(position).getHabitName());
-        String habitTime = mDataset.get(position).getHour() + ":" + mDataset.get(position).getMinute();
-        holder.mHabitTime.setText(habitTime);
+//        String habitTime = mDataset.get(position).getHour() + ":" + mDataset.get(position).getMinute();
+//        holder.mHabitTime.setText(habitTime);
         holder.mStreak.setText(String.valueOf(mDataset.get(position).getStreakCounter()));
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Integer pos = (Integer) holder.mCheckBox.getTag();
-                String checkedHabitId = mDataset.get(pos).getHabitId();
-                Integer beforeClickStreakNum = mDataset.get(pos).getStreakCounter();
-                mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
-            }
-        });
+//
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Integer pos = (Integer) holder.mCheckBox.getTag();
+//                String checkedHabitId = mDataset.get(pos).getHabitId();
+//                Integer beforeClickStreakNum = mDataset.get(pos).getStreakCounter();
+//                mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
+//            }
+//        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
