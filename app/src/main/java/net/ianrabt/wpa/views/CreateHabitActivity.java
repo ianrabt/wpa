@@ -11,14 +11,16 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-
+import com.google.android.gms.maps.model.LatLng;
 import net.ianrabt.wpa.FBRepository;
 import net.ianrabt.wpa.R;
 import net.ianrabt.wpa.Repository;
 import net.ianrabt.wpa.controllers.CreateHabitController;
 
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -34,6 +36,9 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
     public CheckBox thursday;
     public CheckBox friday;
     public CheckBox saturday;
+    private Double lat;
+    private Double lon;
+    LatLng latlng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         saturday.setOnClickListener(this);
         sunday.setOnClickListener(this);
     }
+
 
     @Override
     public void onClick(View v) {
