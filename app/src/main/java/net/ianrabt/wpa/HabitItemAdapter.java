@@ -54,7 +54,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
 
     }
 
-    public String getId(int position){
+    public String getHabitId(int position){
         return mDataset.get(position).getHabitId();
     }
 
@@ -75,8 +75,9 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = view.getId(position);
-                //You can call detail fragment here
+                Integer pos = (Integer) holder.mCheckBox.getTag();
+                String checkedHabitId = mDataset.get(pos).getHabitId();
+                // TODO: call incrementStreak in FBrepository.java
             }
         });
     }
