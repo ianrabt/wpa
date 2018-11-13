@@ -71,32 +71,6 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         recyclerView.setAdapter(adapter);
     }
 
-
-    public void onCheckboxClicked(View view) {
-//        boolean checked = ((CheckBox) view).isChecked();
-//        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        Integer habitID = view.getId();
-        // the id is the same when different checkboxes are clicked...
-
-            // TODO: get the habit ID... map the checkbox id to the particular habit id
-//        adapter = new HabitItemAdapter(habitsList);
-//        recyclerView.setAdapter(adapter);
-//        int adapterPosition = recyclerView.getAdapterPosition();
-//        if (items.get(adapterPosition).getChecked()) {
-//            mCheckedTextView.setChecked(false);
-//            items.get(adapterPosition).setChecked(false);
-//        }
-//        else {
-//            mCheckedTextView.setChecked(true);
-//            items.get(adapterPosition).setChecked(true);
-//        }
-////        mRepository.incrementStreak(habitID, 8);
-//        // Update streak counter
-//        if (checked) {
-//            // TODO: send this information back to the database
-//            // TODO: update the UI
-//    }
-
-    }
+    
 }
 
