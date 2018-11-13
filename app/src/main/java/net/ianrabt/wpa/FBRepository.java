@@ -123,13 +123,12 @@ public class FBRepository{
 
    public void incrementStreak(String habitId, Integer currentStreakValue){
        //TODO: Read currentStreak from cell and increment
-       int currentStreak = 0;
        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+       int newStreakValue = currentStreakValue+1;
        String userId = currentUser.getUid();
-       mDatabase.child("userhabits").child(userId).child("-LPnqJwY8RtTG2Mi_b8h").child("streak_counter").setValue(1);
-       mDatabase.child("habits").child("-LPnqJwY8RtTG2Mi_b8h").child("streak_counter").setValue(1);
-
-       Date currentTime = Calendar.getInstance().getTime();
+       mDatabase.child("userhabits").child(userId).child(habitId).child("streak_counter").setValue(newStreakValue);
+       mDatabase.child("habits").child(habitId).child("streak_counter").setValue(newStreakValue);
+       
    }
 
 
