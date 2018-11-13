@@ -36,9 +36,6 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
     public CheckBox thursday;
     public CheckBox friday;
     public CheckBox saturday;
-    private Double lat;
-    private Double lon;
-    LatLng latlng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

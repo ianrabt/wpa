@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 
 import net.ianrabt.wpa.FBRepository;
 import net.ianrabt.wpa.views.CreateHabitActivity;
@@ -23,6 +24,9 @@ public class CreateHabitController {
     FBRepository mRepository;
     private ArrayList<CheckBox> days = new ArrayList<>();
     int PLACE_PICKER_REQUEST = 1;
+    private Double lat;
+    private Double lon;
+    LatLng latlng;
 
     public CreateHabitController(CreateHabitActivity activity){
         this.activity = activity;
@@ -33,7 +37,7 @@ public class CreateHabitController {
         String name = activity.habitNameText.getText().toString();
         ArrayList<Integer> days = getDays();
         String time = activity.timeText.getText().toString();
-        mRepository.createHabit(name,days,time);
+        mRepository.createHabit(name,days,time, lat, lon);
         Intent newActivity = new Intent(activity, HabitsActivity.class);
         activity.startActivity(newActivity);
     }
@@ -95,6 +99,9 @@ public class CreateHabitController {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == activity.RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, activity);
+                LatLng coord = place.getLatLng();
+                lat = coord.latitude;
+                lon = coord.longitude;
                 String toastMsg = String.format("Place: %s", place.getName());
                 Toast.makeText(activity, toastMsg, Toast.LENGTH_LONG).show();
             }
