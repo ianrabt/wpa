@@ -67,7 +67,7 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new HabitItemAdapter(habitsList);
+        adapter = new HabitItemAdapter(habitsList, mRepository);
         recyclerView.setAdapter(adapter);
     }
 

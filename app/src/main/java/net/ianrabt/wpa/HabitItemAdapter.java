@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyViewHolder> {
     private ArrayList<HabitCellModel> mDataset; // hold the habits data from db
+    private FBRepository mRepository;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -38,8 +39,9 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
 
 
     // Provide a suitable constructor
-    public HabitItemAdapter(ArrayList<HabitCellModel> myDataset) {
+    public HabitItemAdapter(ArrayList<HabitCellModel> myDataset, FBRepository myRepository) {
         mDataset = myDataset;
+        mRepository = myRepository;
     }
 
     // Create new views (invoked by the layout manager)
@@ -77,7 +79,8 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
             public void onClick(View view) {
                 Integer pos = (Integer) holder.mCheckBox.getTag();
                 String checkedHabitId = mDataset.get(pos).getHabitId();
-                // TODO: call incrementStreak in FBrepository.java
+                Integer beforeClickStreakNum = mDataset.get(pos).getStreakCounter();
+                mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
             }
         });
     }
