@@ -123,7 +123,6 @@ public class FBRepository{
     }
 
     public void incrementStreak(String habitId, Integer currentStreakValue){
-        //TODO: Read currentStreak from cell and increment
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         int newStreakValue = currentStreakValue+1;
         String userId = currentUser.getUid();
