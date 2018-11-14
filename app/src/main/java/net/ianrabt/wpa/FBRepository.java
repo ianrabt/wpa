@@ -7,7 +7,6 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -42,12 +41,12 @@ public class FBRepository{
         this.delegate = delegate;
     }
 
-    public void createHabit(String habitName, List<Integer> repeatsOnDays, String time, Double lat, Double lon){
+    public void createHabit(String habitName, List<Integer> repeatsOnDays, String time){
        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
        String id = user.getUid();
        String author = user.getDisplayName();
        String key = mDatabase.child("habits").push().getKey();
-       HabitModel habit = new HabitModel(key, id, author, habitName, repeatsOnDays, time, lat, lon);
+       HabitModel habit = new HabitModel(key, id, author, habitName, repeatsOnDays, time);
        Map<String, Object> habitValues = habit.toMap();
 
 
@@ -129,7 +128,7 @@ public class FBRepository{
        String userId = currentUser.getUid();
        mDatabase.child("userhabits").child(userId).child(habitId).child("streak_counter").setValue(newStreakValue);
        mDatabase.child("habits").child(habitId).child("streak_counter").setValue(newStreakValue);
-
+       
    }
 
 
