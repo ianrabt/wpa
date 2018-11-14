@@ -1,4 +1,6 @@
 package net.ianrabt.wpa.models;
+import android.support.annotation.Nullable;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.Exclude;
 
@@ -38,8 +40,10 @@ public class HabitModel {
         this.repeatsOnDays = repeatsOnDays;
         this.time = time;
         this.checked = false;
-        this.lat = lat;
-        this.lon = lon;
+        if (lat != null & lon != null){
+            this.lat = lat;
+            this.lon = lon;
+        }
     }
 
     public HabitCellModel convertToHabitCellModel(HabitModel model){

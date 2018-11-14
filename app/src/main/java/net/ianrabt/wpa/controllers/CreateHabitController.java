@@ -95,7 +95,7 @@ public class CreateHabitController {
     }
 
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == activity.RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, activity);

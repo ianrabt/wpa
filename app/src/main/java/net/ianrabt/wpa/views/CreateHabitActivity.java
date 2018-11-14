@@ -82,6 +82,10 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         sunday.setOnClickListener(this);
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        controller.onActivityResult(requestCode,resultCode,data);
+    }
+
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
