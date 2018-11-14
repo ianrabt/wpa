@@ -13,6 +13,7 @@ import net.ianrabt.wpa.FBRepository;
 import net.ianrabt.wpa.FBRepositoryDelegate;
 import net.ianrabt.wpa.HabitItemAdapter;
 import net.ianrabt.wpa.R;
+import net.ianrabt.wpa.controllers.HabitsController;
 import net.ianrabt.wpa.models.HabitCellModel;
 import net.ianrabt.wpa.models.HabitModel;
 
@@ -25,33 +26,23 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
     RecyclerView recyclerView;
     private TextView dayTextView;
     private TextView emptyView;
-    private Calendar sCalendar = Calendar.getInstance();
-    ArrayList<HabitCellModel> habitsList = new ArrayList<HabitCellModel>();
     HabitItemAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private FBRepository mRepository;
+    HabitsController controller;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
-
-
-
-        mRepository = new FBRepository();
-        mRepository.setDelegate(this);
-
-        String day = Integer.toString(sCalendar.get(Calendar.DAY_OF_WEEK));
-        mRepository.getHabitsByDay(day);
+        controller = new HabitsController(this);
+        controller.queryHabits();
 
     }
 
     @Override
     public void handleHabitResponse(ArrayList<HabitModel> habitResponse) {
-        for (int i = 0; i < habitResponse.size(); i++) {
-            habitsList.add(new HabitCellModel(habitResponse.get(i)));
-        }
+        controller.handleHabitResponse(habitResponse);
     }
 
     public void render() {
@@ -64,14 +55,14 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new HabitItemAdapter(habitsList);
+        adapter = new HabitItemAdapter(controller.habitsList);
         recyclerView.setAdapter(adapter);
 
-        String dayLongName = sCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+        String dayLongName = controller.getDay();
         recyclerView.addItemDecoration(new HeaderViewDecoration(this,
                 recyclerView,  R.layout.habit_header, dayLongName));
 
-        if (habitsList.isEmpty()){
+        if (controller.habitsList.isEmpty()){
             recyclerView.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
         }
@@ -92,9 +83,8 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.create:
-                Intent newActivity = new Intent(this, CreateHabitActivity.class);
-                startActivity(newActivity);
-                break;
+                controller.segueToCreateHabitActivity();
+                break  ;
 
         }
     }
