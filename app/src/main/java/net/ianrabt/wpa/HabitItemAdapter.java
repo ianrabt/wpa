@@ -66,8 +66,10 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
 //        // holder is the UI element, position relates to the element in the list of tasks in the recycler view
 //        // **** Currently causes program to crash ****
         holder.mHabitName.setText((CharSequence) mDataset.get(position).getHabitName());
-//        String habitTime = mDataset.get(position).getHour() + ":" + mDataset.get(position).getMinute();
-//        holder.mHabitTime.setText(habitTime);
+
+        // Build the string to represent the habit time
+        // TODO: implement time range
+        holder.mHabitTime.setText(mDataset.get(position).getTime());
         holder.mStreak.setText(String.valueOf(mDataset.get(position).getStreakCounter()));
 //
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
