@@ -7,6 +7,7 @@ import net.ianrabt.wpa.Repository;
 import net.ianrabt.wpa.models.HabitCellModel;
 import net.ianrabt.wpa.models.HabitModel;
 import net.ianrabt.wpa.views.CreateHabitActivity;
+import net.ianrabt.wpa.views.HabitTodoFragment;
 import net.ianrabt.wpa.views.HabitsActivity;
 
 import java.util.ArrayList;
@@ -18,12 +19,13 @@ public class HabitsController {
     private FBRepository mRepository;
     private Calendar sCalendar = Calendar.getInstance();
     public ArrayList<HabitCellModel> habitsList = new ArrayList<HabitCellModel>();
+    private HabitTodoFragment fragment;
     private HabitsActivity activity;
 
-    public HabitsController(HabitsActivity activity){
-        this.activity = activity;
+    public HabitsController(HabitTodoFragment fragment){
+        this.fragment = fragment;
         mRepository = new FBRepository();
-        mRepository.setDelegate(activity);
+        mRepository.setDelegate(fragment);
 
     }
 

@@ -2,10 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="16dp">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <CheckBox
         android:id="@+id/checkbox"
@@ -18,6 +16,14 @@
         android:onClick="onCheckboxClicked"
         android:scaleX="2"
         android:scaleY="2" />
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="No habits created for this day. Create more a habit by clicking the + button!" />
 
     <TextView
         android:id="@+id/habitName"
@@ -33,7 +39,6 @@
         android:inputType="text"
         android:text="HabitName" />
 
-
     <TextView
         android:id="@+id/habitTimeRange"
         android:layout_width="123dp"
@@ -47,7 +52,6 @@
         android:inputType="text"
         android:text="2:00pm - 4:00pm"
         android:textSize="13dp" />
-
 
     <TextView
         android:id="@+id/streakCounter"
@@ -74,7 +78,5 @@
         android:layout_toRightOf="@+id/streakCounter"
         android:layout_weight="1"
         app:srcCompat="@android:drawable/ic_notification_overlay" />
-
-
 
 </RelativeLayout>
