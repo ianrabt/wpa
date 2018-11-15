@@ -18,24 +18,6 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public CheckBox mCheckBox;
-        public TextView mHabitName;
-        public TextView mHabitTime;
-        public TextView mStreak;
-
-
-        public MyViewHolder(View itemView){
-            super(itemView);
-
-            mCheckBox = itemView.findViewById(R.id.checkbox);
-            mHabitName = itemView.findViewById(R.id.habitName);
-            mHabitTime = itemView.findViewById(R.id.habitTimeRange);
-            mStreak = itemView.findViewById(R.id.streakCounter);
-
-        }
-
-    }
 
 
     // Provide a suitable constructor
@@ -62,25 +44,29 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+    public void onBindViewHolder( MyViewHolder holder, final int position) {
 //        // holder is the UI element, position relates to the element in the list of tasks in the recycler view
 //        // **** Currently causes program to crash ****
+        System.out.println("first");
         holder.mHabitName.setText((CharSequence) mDataset.get(position).getHabitName());
 
         // Build the string to represent the habit time
         // TODO: implement time range
         holder.mHabitTime.setText(mDataset.get(position).getTime());
         holder.mStreak.setText(String.valueOf(mDataset.get(position).getStreakCounter()));
-//
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+
+//        holder.mCheckBox.setTag(position);
+        System.out.println("after setting tag");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("on bind click");
 //                Integer pos = (Integer) holder.mCheckBox.getTag();
-//                String checkedHabitId = mDataset.get(pos).getHabitId();
-//                Integer beforeClickStreakNum = mDataset.get(pos).getStreakCounter();
-//                mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
-//            }
-//        });
+                String checkedHabitId = mDataset.get(position).getHabitId();
+                Integer beforeClickStreakNum = mDataset.get(position).getStreakCounter();
+                mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -88,6 +74,30 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
     public int getItemCount() {
         return mDataset.size();
     }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        public CheckBox mCheckBox;
+        public TextView mHabitName;
+        public TextView mHabitTime;
+        public TextView mStreak;
+
+        public MyViewHolder(View itemView){
+            super(itemView);
+
+            mCheckBox = itemView.findViewById(R.id.checkbox);
+            mHabitName = itemView.findViewById(R.id.habitName);
+            mHabitTime = itemView.findViewById(R.id.habitTimeRange);
+            mStreak = itemView.findViewById(R.id.streakCounter);
+            mCheckBox.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            System.out.println("in onClick in viewholder class");
+        }
+    }
+
 
 }
 
