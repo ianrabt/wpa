@@ -94,7 +94,6 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
                 Intent newActivity = new Intent(this, CreateHabitActivity.class);
                 startActivity(newActivity);
                 break;
-
         }
     }
 

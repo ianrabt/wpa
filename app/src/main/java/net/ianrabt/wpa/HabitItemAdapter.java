@@ -3,6 +3,7 @@ package net.ianrabt.wpa;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -47,7 +48,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
     public void onBindViewHolder( MyViewHolder holder, final int position) {
 //        // holder is the UI element, position relates to the element in the list of tasks in the recycler view
 //        // **** Currently causes program to crash ****
-        System.out.println("first");
+        System.out.println("first string printed");
         holder.mHabitName.setText((CharSequence) mDataset.get(position).getHabitName());
 
         // Build the string to represent the habit time
@@ -57,16 +58,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
 
 //        holder.mCheckBox.setTag(position);
         System.out.println("after setting tag");
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("on bind click");
-//                Integer pos = (Integer) holder.mCheckBox.getTag();
-                String checkedHabitId = mDataset.get(position).getHabitId();
-                Integer beforeClickStreakNum = mDataset.get(position).getStreakCounter();
-                mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
-            }
-        });
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -75,7 +67,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         return mDataset.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         public CheckBox mCheckBox;
         public TextView mHabitName;
         public TextView mHabitTime;
@@ -88,14 +80,29 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
             mHabitName = itemView.findViewById(R.id.habitName);
             mHabitTime = itemView.findViewById(R.id.habitTimeRange);
             mStreak = itemView.findViewById(R.id.streakCounter);
-            mCheckBox.setOnClickListener(this);
+//            mCheckBox.setOnClickListener(this);
 
         }
 
-        @Override
-        public void onClick(View v) {
-            System.out.println("in onClick in viewholder class");
-        }
+
+        private OnClickListener checkboxOnClickListener = new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("on bind click");
+                Integer position = (Integer) mCheckBox.getTag();
+                String checkedHabitId = mDataset.get(position).getHabitId();
+                Integer beforeClickStreakNum = mDataset.get(position).getStreakCounter();
+                mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
+            }
+        };
+
+//        private void onCheckboxClicked(View view) {
+//            CheckBox check = this.mCheckBox;
+//            Integer position = (Integer) view.check.getTag();
+//            String checkedHabitId = mDataset.get(position).getHabitId();
+//            Integer beforeClickStreakNum = mDataset.get(position).getStreakCounter();
+//            mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
+//        }
     }
 
 
