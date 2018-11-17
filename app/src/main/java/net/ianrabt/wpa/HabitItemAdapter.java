@@ -1,6 +1,7 @@
 package net.ianrabt.wpa;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,7 +68,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         return mDataset.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public CheckBox mCheckBox;
         public TextView mHabitName;
         public TextView mHabitTime;
@@ -80,29 +81,20 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
             mHabitName = itemView.findViewById(R.id.habitName);
             mHabitTime = itemView.findViewById(R.id.habitTimeRange);
             mStreak = itemView.findViewById(R.id.streakCounter);
-//            mCheckBox.setOnClickListener(this);
+            mCheckBox.setOnClickListener(this);
 
         }
 
 
-        private OnClickListener checkboxOnClickListener = new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("on bind click");
-                Integer position = (Integer) mCheckBox.getTag();
-                String checkedHabitId = mDataset.get(position).getHabitId();
-                Integer beforeClickStreakNum = mDataset.get(position).getStreakCounter();
-                mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
-            }
-        };
+        @Override
+        public void onClick(View v) {
+            Log.d("CLICKBOI", "Clicked the button");
+            Integer position = (Integer) mCheckBox.getTag();
+            String checkedHabitId = mDataset.get(position).getHabitId();
+            Integer beforeClickStreakNum = mDataset.get(position).getStreakCounter();
+            mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
+        }
 
-//        private void onCheckboxClicked(View view) {
-//            CheckBox check = this.mCheckBox;
-//            Integer position = (Integer) view.check.getTag();
-//            String checkedHabitId = mDataset.get(position).getHabitId();
-//            Integer beforeClickStreakNum = mDataset.get(position).getStreakCounter();
-//            mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
-//        }
     }
 
 
