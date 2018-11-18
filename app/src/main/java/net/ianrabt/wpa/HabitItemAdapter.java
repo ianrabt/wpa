@@ -56,7 +56,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         // TODO: implement time range
         holder.mHabitTime.setText(mDataset.get(position).getTime());
         holder.mStreak.setText(String.valueOf(mDataset.get(position).getStreakCounter()));
-        holder.mCheckBox.setTag(position);
+        holder.mPosition = position;
 
 //        holder.mCheckBox.setTag(position);
         System.out.println("after setting tag");
@@ -74,6 +74,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         public TextView mHabitName;
         public TextView mHabitTime;
         public TextView mStreak;
+        public int mPosition;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -90,7 +91,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         @Override
         public void onClick(View v) {
             Log.d("CLICKBOI", "Clicked the button");
-            Integer position = (Integer) mCheckBox.getTag();
+            Integer position = (Integer) mPosition;
             String checkedHabitId = mDataset.get(position).getHabitId();
             Integer beforeClickStreakNum = mDataset.get(position).getStreakCounter();
             mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
