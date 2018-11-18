@@ -30,7 +30,6 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
     private RecyclerView.LayoutManager mLayoutManager;
     HabitsController controller;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +54,7 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new HabitItemAdapter(controller.habitsList);
+        adapter = new HabitItemAdapter(controller.habitsList, controller.mRepository);
         recyclerView.setAdapter(adapter);
 
         String dayLongName = controller.getDay();

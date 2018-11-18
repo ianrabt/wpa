@@ -15,7 +15,7 @@ import java.util.Locale;
 
 public class HabitsController {
 
-    private FBRepository mRepository;
+    public FBRepository mRepository;
     private Calendar sCalendar = Calendar.getInstance();
     public ArrayList<HabitCellModel> habitsList = new ArrayList<HabitCellModel>();
     private HabitsActivity activity;
