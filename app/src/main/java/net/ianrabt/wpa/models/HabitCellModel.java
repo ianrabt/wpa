@@ -16,7 +16,7 @@ public class HabitCellModel extends ViewModel {
     }
 
     public HabitCellModel(HabitModel model){
-        this.habitId = model.getHabitId();
+        this.habitId = model.getKey();
         this.habitName = model.getName();
         this.time = model.getTime();
         this.checked = model.isChecked();

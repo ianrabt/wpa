@@ -43,6 +43,9 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
     public String getHabitId(int position){
         return mDataset.get(position).getHabitId();
     }
+    public Integer getStreak(int position){
+        return mDataset.get(position).getStreakCounter();
+    }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
@@ -92,9 +95,11 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         public void onClick(View v) {
             Log.d("CLICKBOI", "Clicked the button");
             Integer position = (Integer) mPosition;
-            String checkedHabitId = mDataset.get(position).getHabitId();
-            Integer beforeClickStreakNum = mDataset.get(position).getStreakCounter();
+            String checkedHabitId = getHabitId(position);
+            Integer beforeClickStreakNum = getStreak(position);
+            int newStreak = beforeClickStreakNum + 1;
             mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
+            mStreak.setText(Integer.toString(newStreak));
         }
     }
 
