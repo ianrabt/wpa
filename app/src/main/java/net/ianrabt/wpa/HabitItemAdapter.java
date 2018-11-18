@@ -14,15 +14,9 @@ import net.ianrabt.wpa.models.HabitCellModel;
 import java.util.ArrayList;
 
 public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyViewHolder> {
-    private ArrayList<HabitCellModel> mDataset; // hold the habits data from db
+    private ArrayList<HabitCellModel> mDataset;
     private FBRepository mRepository;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-
-
-    // Provide a suitable constructor
     public HabitItemAdapter(ArrayList<HabitCellModel> myDataset, FBRepository myRepository) {
         mDataset = myDataset;
         mRepository = myRepository;
@@ -50,19 +44,11 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder( MyViewHolder holder, final int position) {
-//        // holder is the UI element, position relates to the element in the list of tasks in the recycler view
-//        // **** Currently causes program to crash ****
-        System.out.println("first string printed");
+        // holder is the UI element, position relates to the element in the list of tasks in the recycler view
         holder.mHabitName.setText((CharSequence) mDataset.get(position).getHabitName());
-
-        // Build the string to represent the habit time
-        // TODO: implement time range
         holder.mHabitTime.setText(mDataset.get(position).getTime());
         holder.mStreak.setText(String.valueOf(mDataset.get(position).getStreakCounter()));
         holder.mPosition = position;
-
-//        holder.mCheckBox.setTag(position);
-        System.out.println("after setting tag");
 
     }
 
@@ -93,7 +79,6 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
 
         @Override
         public void onClick(View v) {
-            Log.d("CLICKBOI", "Clicked the button");
             Integer position = (Integer) mPosition;
             String checkedHabitId = getHabitId(position);
             Integer beforeClickStreakNum = getStreak(position);

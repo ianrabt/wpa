@@ -82,10 +82,7 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         FloatingActionButton addHabit = (FloatingActionButton) findViewById(R.id.create);
         recyclerView.setVisibility(View.VISIBLE);
         addHabit.setOnClickListener(this);
-
-
     }
-
 
     @Override
     public void onClick(View v) {
@@ -96,7 +93,6 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
                 break;
         }
     }
-
 
 }
 
