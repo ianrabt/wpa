@@ -22,16 +22,16 @@
     <TextView
         android:id="@+id/habitName"
         android:layout_width="200dp"
-        android:layout_height="29dp"
+        android:layout_height="35dp"
         android:layout_above="@+id/habitTimeRange"
         android:layout_marginLeft="22dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="18dp"
         android:layout_toRightOf="@+id/checkbox"
         android:layout_weight="1"
         android:textSize="25dp"
         android:ems="10"
         android:inputType="text"
-        android:text="HabitName" />
+        android:text="HabitNamey" />
 
 
     <TextView
@@ -51,21 +51,24 @@
 
     <TextView
         android:id="@+id/streakCounter"
-        android:layout_width="32dp"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/habitName"
-        android:layout_marginLeft="3dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="-18dp"
         android:layout_toRightOf="@+id/habitTimeRange"
         android:layout_weight="1"
         android:ems="3"
         android:inputType="text"
-        android:text="4000"
-        android:textSize="13dp" />
+        android:text="400"
+        android:textSize="13dp"
+        android:gravity="right"
+        android:textAlignment="gravity"
+        />
 
     <ImageView
         android:id="@+id/streakFlame"
-        android:layout_width="30dp"
+        android:layout_width="20dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/habitName"
         android:layout_marginStart="2dp"
