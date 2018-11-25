@@ -6,13 +6,9 @@ import static org.junit.Assert.*;
 
 public class HabitModelTest {
     private HabitModel habit;
-    private Date habitDate;
 
     @Test
     public void ConstructorTest(){
-        habit = new HabitModel("Workout");
 
-        assertThat(habit.getHabitName(), is("Workout"));
-        assertThat(habit.getStreakCounter(), is(0));
     }
 }

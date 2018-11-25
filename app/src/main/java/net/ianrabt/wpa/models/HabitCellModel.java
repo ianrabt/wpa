@@ -9,12 +9,6 @@ public class HabitCellModel extends ViewModel {
     private boolean checked;
     private int streakCounter;
 
-
-    public HabitCellModel(String habitName, Date habitDate) {
-        this.habitName = habitName;
-        this.streakCounter = 0;
-    }
-
     public HabitCellModel(HabitModel model){
         this.habitId = model.getKey();
         this.habitName = model.getName();
