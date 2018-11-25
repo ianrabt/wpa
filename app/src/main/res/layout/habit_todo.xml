@@ -66,17 +66,19 @@
         android:textAlignment="gravity"
         />
 
+
+
     <ImageView
         android:id="@+id/streakFlame"
-        android:layout_width="20dp"
-        android:layout_height="wrap_content"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:layout_below="@+id/habitName"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="-18dp"
         android:layout_toRightOf="@+id/streakCounter"
         android:layout_weight="1"
-        app:srcCompat="@android:drawable/ic_notification_overlay" />
+        app:srcCompat="@drawable/fire" />
 
 
 
