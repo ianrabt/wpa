@@ -47,4 +47,8 @@ public class HabitsController {
         activity.startActivity(newActivity);
     }
 
+    public void incrementStreak(String habitId, Integer currentStreakValue){
+        mRepository.incrementStreak(habitId, currentStreakValue);
+    }
+
 }

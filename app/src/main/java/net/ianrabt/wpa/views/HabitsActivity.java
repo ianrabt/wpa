@@ -30,14 +30,13 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
     private RecyclerView.LayoutManager mLayoutManager;
     HabitsController controller;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
+
         controller = new HabitsController(this);
         controller.queryHabits();
-
     }
 
     @Override
@@ -55,7 +54,7 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new HabitItemAdapter(controller.habitsList);
+        adapter = new HabitItemAdapter(controller.habitsList, controller);
         recyclerView.setAdapter(adapter);
 
         String dayLongName = controller.getDay();
@@ -74,10 +73,7 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         FloatingActionButton addHabit = (FloatingActionButton) findViewById(R.id.create);
         recyclerView.setVisibility(View.VISIBLE);
         addHabit.setOnClickListener(this);
-
-
     }
-
 
     @Override
     public void onClick(View v) {
@@ -85,20 +81,8 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
             case R.id.create:
                 controller.segueToCreateHabitActivity();
                 break  ;
-
         }
     }
 
-
-//    public void onCheckboxClicked(View view) {
-//        boolean checked = ((CheckBox) view).isChecked();
-//        mRepository.incrementStreak();
-//        // Update streak counter
-//        if (checked) {
-//            // TODO: send this information back to the database
-//            // TODO: update the UI
-//        }
-//
-//    }
 }
 
