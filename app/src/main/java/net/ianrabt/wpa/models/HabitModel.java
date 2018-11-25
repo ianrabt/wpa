@@ -45,10 +45,7 @@ public class HabitModel {
             this.lon = lon;
         }
     }
-
-    public HabitCellModel convertToHabitCellModel(HabitModel model){
-        return new HabitCellModel(model.name, new Date());
-    }
+    
 
     // Getter Methods
     public String getAuthor() {
