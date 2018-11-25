@@ -10,16 +10,18 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import net.ianrabt.wpa.models.HabitCellModel;
+import net.ianrabt.wpa.controllers.HabitsController;
+import net.ianrabt.wpa.views.HabitsActivity;
 
 import java.util.ArrayList;
 
 public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyViewHolder> {
     private ArrayList<HabitCellModel> mDataset;
-    private FBRepository mRepository;
+    private HabitsController mController;
 
-    public HabitItemAdapter(ArrayList<HabitCellModel> myDataset, FBRepository myRepository) {
+    public HabitItemAdapter(ArrayList<HabitCellModel> myDataset, HabitsController myController) {
         mDataset = myDataset;
-        mRepository = myRepository;
+        mController = myController;
     }
 
     // Create new views (invoked by the layout manager)
@@ -81,10 +83,10 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         public void onClick(View v) {
             Integer position = (Integer) mPosition;
             String checkedHabitId = getHabitId(position);
-            Integer beforeClickStreakNum = getStreak(position);
-            int newStreak = beforeClickStreakNum + 1;
-            mRepository.incrementStreak(checkedHabitId, beforeClickStreakNum);
+            Integer streakNum = getStreak(position);
+            int newStreak = streakNum + 1;
             mStreak.setText(Integer.toString(newStreak));
+            mController.incrementStreak(checkedHabitId, streakNum);
         }
     }
 

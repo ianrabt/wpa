@@ -15,7 +15,7 @@ import java.util.Locale;
 
 public class HabitsController {
 
-    public FBRepository mRepository;
+    private FBRepository mRepository;
     private Calendar sCalendar = Calendar.getInstance();
     public ArrayList<HabitCellModel> habitsList = new ArrayList<HabitCellModel>();
     private HabitsActivity activity;
@@ -45,6 +45,10 @@ public class HabitsController {
     public void segueToCreateHabitActivity(){
         Intent newActivity = new Intent(activity, CreateHabitActivity.class);
         activity.startActivity(newActivity);
+    }
+
+    public void incrementStreak(String habitId, Integer currentStreakValue){
+        mRepository.incrementStreak(habitId, currentStreakValue);
     }
 
 }

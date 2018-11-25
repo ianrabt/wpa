@@ -54,7 +54,7 @@ public class HabitsActivity extends AppCompatActivity implements FBRepositoryDel
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new HabitItemAdapter(controller.habitsList, controller.mRepository);
+        adapter = new HabitItemAdapter(controller.habitsList, controller);
         recyclerView.setAdapter(adapter);
 
         String dayLongName = controller.getDay();
