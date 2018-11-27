@@ -99,7 +99,7 @@ public class FBRepository{
         Query query = mDatabase.child("userhabits").child(userId).child(day);
 
 
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<HabitModel> habitList = new ArrayList<>();
@@ -122,12 +122,12 @@ public class FBRepository{
 
     }
 
-    public void incrementStreak(String habitId, Integer currentStreakValue){
+    public void incrementStreak(String habitId, Integer currentStreakValue, String day){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         int newStreakValue = currentStreakValue+1;
         String userId = currentUser.getUid();
-        mDatabase.child("userhabits").child(userId).child(habitId).child("streak_counter").setValue(newStreakValue);
-        mDatabase.child("habits").child(habitId).child("streak_counter").setValue(newStreakValue);
+        mDatabase.child("userhabits").child(userId).child(day).child(habitId).child("streakCounter").setValue(newStreakValue);
+        mDatabase.child("habits").child(habitId).child("streakCounter").setValue(newStreakValue);
 
     }
 
