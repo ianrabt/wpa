@@ -57,7 +57,7 @@ public class FBRepository{
         //update the days for which these habits go under
         List<Integer> days = habit.getRepeatsOnDays();
         for (int i = 0; i < habit.getRepeatsOnDays().size(); ++i){
-            child.put("/userhabits/" + days.get(i) + "/" + id + "/" + key, habitValues);
+            child.put("/userhabits/" + id + "/" + days.get(i) + "/" + key, habitValues);
         }
 
 
@@ -96,7 +96,7 @@ public class FBRepository{
         //mDatabase.addChildEventListener(mChildEventListener);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = currentUser.getUid();
-        Query query = mDatabase.child("userhabits").child(day).child(userId);
+        Query query = mDatabase.child("userhabits").child(userId).child(day);
 
 
         query.addValueEventListener(new ValueEventListener() {
