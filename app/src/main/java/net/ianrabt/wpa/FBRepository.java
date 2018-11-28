@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,6 +27,7 @@ import net.ianrabt.wpa.views.HabitsActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,7 +102,7 @@ public class FBRepository{
         Query query = mDatabase.child("userhabits").child(userId).child(day);
 
 
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<HabitModel> habitList = new ArrayList<>();
@@ -122,15 +125,30 @@ public class FBRepository{
 
     }
 
-    public void incrementStreak(String habitId, Integer currentStreakValue){
+    //if increment is true, then increment the streak counter, otherwise decrement the streak counter
+    public void updateStreak(String habitId, Integer currentStreakValue, String day, boolean increment){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        int newStreakValue = currentStreakValue+1;
         String userId = currentUser.getUid();
-        mDatabase.child("userhabits").child(userId).child(habitId).child("streak_counter").setValue(newStreakValue);
-        mDatabase.child("habits").child(habitId).child("streak_counter").setValue(newStreakValue);
+        DatabaseReference userHabitChild = mDatabase.child("userhabits").child(userId).child(day).child(habitId);
+        DatabaseReference habitChild = mDatabase.child("habits").child(habitId);
+
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat spf= new SimpleDateFormat("yyyyMMdd");
+        String date = spf.format(today);
+
+        int newStreakValue;
+        if(increment){
+            newStreakValue = currentStreakValue+1;
+            userHabitChild.child("checked").setValue(true);
+        } else{
+            newStreakValue = currentStreakValue-1;
+            userHabitChild.child("checked").setValue(false);
+        }
+        userHabitChild.child("streakCounter").setValue(newStreakValue);
+        userHabitChild.child("dateLastChecked").setValue(date);
+        habitChild.child("streakCounter").setValue(newStreakValue);
 
     }
-
 
 
 }

@@ -47,8 +47,9 @@ public class HabitsController {
         activity.startActivity(newActivity);
     }
 
-    public void incrementStreak(String habitId, Integer currentStreakValue){
-        mRepository.incrementStreak(habitId, currentStreakValue);
+    public void updateStreak(String habitId, Integer currentStreakValue, boolean increment){
+        String day = Integer.toString(sCalendar.get(Calendar.DAY_OF_WEEK));
+        mRepository.updateStreak(habitId, currentStreakValue, day, increment);
     }
 
 }
