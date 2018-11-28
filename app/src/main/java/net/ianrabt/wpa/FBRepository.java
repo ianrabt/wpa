@@ -149,5 +149,6 @@ public class FBRepository{
         habitChild.child("streakCounter").setValue(newStreakValue);
 
     }
+
     
 }
