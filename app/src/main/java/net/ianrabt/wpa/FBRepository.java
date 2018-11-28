@@ -130,7 +130,4 @@ public class FBRepository{
         mDatabase.child("habits").child(habitId).child("streak_counter").setValue(newStreakValue);
 
     }
-
-
-
 }
