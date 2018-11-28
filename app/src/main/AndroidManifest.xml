@@ -24,9 +24,13 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/api_key"/>
+            android:value="@string/api_key" />
 
-        <activity android:name=".views.CreateHabitActivity"></activity>
+        <activity android:name=".views.CreateHabitActivity" />
+        <activity
+            android:name=".views.DataVisActivity"
+            android:label="@string/title_activity_data_vis"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
