@@ -4,8 +4,11 @@ import android.support.annotation.Nullable;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.Exclude;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +16,7 @@ import java.util.Map;
 public class HabitModel {
     private String uid;
     private String author;
-    private String habitId;
+    private String key;
     private String name;
     private int streakCounter;
     private int completions;
@@ -22,6 +25,7 @@ public class HabitModel {
     private boolean checked;
     private double lat;
     private double lon;
+    private String dateLastChecked;
 
 
 
@@ -33,7 +37,7 @@ public class HabitModel {
     public HabitModel(String habitId, String uid, String author, String habitName, List<Integer> repeatsOnDays, String time, Double lat, Double lon) {
         this.uid = uid;
         this.author = author;
-        this.habitId = habitId;
+        this.key = habitId;
         this.name = habitName;
         this.streakCounter = 0;
         this.completions = 0;
@@ -44,11 +48,11 @@ public class HabitModel {
             this.lat = lat;
             this.lon = lon;
         }
+        Date initialDate = (new GregorianCalendar(2000 , Calendar.JANUARY, 1)).getTime();
+        SimpleDateFormat spf= new SimpleDateFormat("yyyyMMdd");
+        this.dateLastChecked = spf.format(initialDate);
     }
-
-    public HabitCellModel convertToHabitCellModel(HabitModel model){
-        return new HabitCellModel(model.name, new Date());
-    }
+    
 
     // Getter Methods
     public String getAuthor() {
@@ -59,7 +63,7 @@ public class HabitModel {
         return this.uid;
     }
 
-    public String getHabitId() { return habitId; }
+    public String getKey() { return key; }
 
     public String getName() {
         return this.name;
@@ -83,10 +87,13 @@ public class HabitModel {
 
     public double getLon() { return lon; }
 
+    public String getDateLastChecked() { return dateLastChecked; }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid", uid);
+        result.put("key", key);
         result.put("author", author);
         result.put("name", name);
         result.put("streakCounter", streakCounter);
@@ -96,6 +103,7 @@ public class HabitModel {
         result.put("checked", checked);
         result.put("lat",lat);
         result.put("lon", lon);
+        result.put("dateLastChecked", dateLastChecked);
 
         return result;
     }

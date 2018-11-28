@@ -60,7 +60,7 @@ public class HabitTodoFragment extends Fragment implements FBRepositoryDelegate,
         mLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new HabitItemAdapter(controller.habitsList);
+        adapter = new HabitItemAdapter(controller.habitsList, controller);
         recyclerView.setAdapter(adapter);
 
         String dayLongName = controller.getDay();

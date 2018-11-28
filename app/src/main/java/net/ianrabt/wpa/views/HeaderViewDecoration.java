@@ -37,8 +37,9 @@ public class HeaderViewDecoration extends RecyclerView.ItemDecoration {
             if (parent.getChildAdapterPosition(view) == 0) {
                 c.save();
                 final int height = mLayout.getMeasuredHeight();
-                final int top = view.getTop() - height;
-                c.translate(0, top);
+                final int top = view.getTop() - height + 50;
+                final int left = 300;
+                c.translate(left, top);
                 mLayout.draw(c);
                 c.restore();
                 break;
