@@ -26,6 +26,7 @@ public class HabitModel {
     private double lat;
     private double lon;
     private String dateLastChecked;
+    long dateCreated;
 
 
 
@@ -51,6 +52,7 @@ public class HabitModel {
         Date initialDate = (new GregorianCalendar(2000 , Calendar.JANUARY, 1)).getTime();
         SimpleDateFormat spf= new SimpleDateFormat("yyyyMMdd");
         this.dateLastChecked = spf.format(initialDate);
+        this.dateCreated = Calendar.getInstance().getTimeInMillis();
     }
     
 
@@ -89,6 +91,8 @@ public class HabitModel {
 
     public String getDateLastChecked() { return dateLastChecked; }
 
+    public long getDateCreated() { return dateCreated; }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
@@ -104,6 +108,7 @@ public class HabitModel {
         result.put("lat",lat);
         result.put("lon", lon);
         result.put("dateLastChecked", dateLastChecked);
+        result.put("dateCreated", dateCreated);
 
         return result;
     }
