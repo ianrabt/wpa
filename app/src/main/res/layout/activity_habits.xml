@@ -53,4 +53,12 @@
         android:layout_height="fill_parent"
         android:layout_below="@id/tab_layout"/>
 
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="No habits created for this day. Create more a habit by clicking the + button!"/>
+
 </android.support.design.widget.CoordinatorLayout>

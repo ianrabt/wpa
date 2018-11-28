@@ -45,8 +45,8 @@ public class HabitsController {
     }
 
     public void segueToCreateHabitActivity(){
-        Intent newActivity = new Intent(activity, CreateHabitActivity.class);
-        activity.startActivity(newActivity);
+        Intent newActivity = new Intent(fragment.getActivity(), CreateHabitActivity.class);
+        fragment.getActivity().startActivity(newActivity);
     }
 
 }

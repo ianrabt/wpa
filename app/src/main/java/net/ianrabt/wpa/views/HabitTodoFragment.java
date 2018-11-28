@@ -31,10 +31,8 @@ public class HabitTodoFragment extends Fragment implements FBRepositoryDelegate,
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.habit_main, container, false);
-        inflater.inflate(R.layout.activity_habits, container, false);
-        activity_hab = root.findViewById(R.id.activity_habits);
-        habit_todo = root.findViewById(R.id.habit_todo);
+        View root = inflater.inflate(R.layout.activity_habits, container, false);
+
         return root;
     }
 
@@ -53,8 +51,8 @@ public class HabitTodoFragment extends Fragment implements FBRepositoryDelegate,
 
     public void render() {
 
-        emptyView = (TextView) activity_hab.findViewById(R.id.empty_view);
-        recyclerView = (RecyclerView) habit_todo.findViewById(R.id.my_recycler_view);
+        emptyView = (TextView) getView().findViewById(R.id.empty_view);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         //recyclerView.setHasFixedSize(true);
