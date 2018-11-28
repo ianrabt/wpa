@@ -104,6 +104,7 @@ public class CreateHabitController {
                 lon = coord.longitude;
                 String toastMsg = String.format("Place: %s", place.getName());
                 Toast.makeText(activity, toastMsg, Toast.LENGTH_LONG).show();
+                activity.addLocation.setText("Location Added");
             }
         }
     }
