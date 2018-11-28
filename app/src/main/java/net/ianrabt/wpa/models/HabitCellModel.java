@@ -33,4 +33,8 @@ public class HabitCellModel extends ViewModel {
     public int getStreakCounter() { return streakCounter; }
 
     public String getDateLastChecked() { return dateLastChecked; }
+
+    public void setChecked(boolean checked) { this.checked = checked; }
+
+    public void setStreakCounter(int streakCounter) { this.streakCounter = streakCounter;}
 }

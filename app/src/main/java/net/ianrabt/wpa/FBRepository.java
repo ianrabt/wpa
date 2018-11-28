@@ -125,22 +125,30 @@ public class FBRepository{
 
     }
 
-    public void incrementStreak(String habitId, Integer currentStreakValue, String day){
+    //if increment is true, then increment the streak counter, otherwise decrement the streak counter
+    public void updateStreak(String habitId, Integer currentStreakValue, String day, boolean increment){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        int newStreakValue = currentStreakValue+1;
+        String userId = currentUser.getUid();
+        DatabaseReference userHabitChild = mDatabase.child("userhabits").child(userId).child(day).child(habitId);
+        DatabaseReference habitChild = mDatabase.child("habits").child(habitId);
 
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat spf= new SimpleDateFormat("yyyyMMdd");
         String date = spf.format(today);
 
-        String userId = currentUser.getUid();
-        mDatabase.child("userhabits").child(userId).child(day).child(habitId).child("streakCounter").setValue(newStreakValue);
-        mDatabase.child("userhabits").child(userId).child(day).child(habitId).child("checked").setValue(true);
-        mDatabase.child("userhabits").child(userId).child(day).child(habitId).child("dateLastChecked").setValue(date);
-        mDatabase.child("habits").child(habitId).child("streakCounter").setValue(newStreakValue);
+        int newStreakValue;
+        if(increment){
+            newStreakValue = currentStreakValue+1;
+            userHabitChild.child("checked").setValue(true);
+        } else{
+            newStreakValue = currentStreakValue-1;
+            userHabitChild.child("checked").setValue(false);
+        }
+        userHabitChild.child("streakCounter").setValue(newStreakValue);
+        userHabitChild.child("dateLastChecked").setValue(date);
+        habitChild.child("streakCounter").setValue(newStreakValue);
 
     }
-
 
 
 }

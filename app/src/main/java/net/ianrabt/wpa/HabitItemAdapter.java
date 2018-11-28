@@ -49,6 +49,13 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
 
     public boolean isChecked(int position) { return mDataset.get(position).isChecked(); }
 
+    public void setChecked(int position, boolean isChecked){
+        mDataset.get(position).setChecked(isChecked);
+    }
+
+    public void setStreakValue(int position, int value){
+        mDataset.get(position).setStreakCounter(value);
+    }
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder( MyViewHolder holder, final int position) {
@@ -61,6 +68,8 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         if(getCurrentDay().compareTo(cell.getDateLastChecked()) == 0){
             boolean isChecked = cell.isChecked();
             holder.mCheckBox.setChecked(isChecked);
+        } else {
+            setChecked(position, false);
         }
 
 
@@ -97,9 +106,20 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
             String checkedHabitId = getHabitId(position);
             Integer streakNum = getStreak(position);
             boolean isChecked = isChecked(position);
-            int newStreak = streakNum + 1;
-            mStreak.setText(Integer.toString(newStreak));
-            mController.incrementStreak(checkedHabitId, streakNum, isChecked);
+            if (!isChecked){
+                int newStreak = streakNum + 1;
+                mStreak.setText(Integer.toString(newStreak));
+                setChecked(position, true);
+                setStreakValue(position,newStreak);
+                mController.updateStreak(checkedHabitId, streakNum, true);
+            }
+            else if (isChecked){
+                int newStreak = streakNum - 1;
+                mStreak.setText(Integer.toString(newStreak));
+                setStreakValue(position, newStreak);
+                setChecked(position,false);
+                mController.updateStreak(checkedHabitId, streakNum, false);
+            }
         }
     }
 
