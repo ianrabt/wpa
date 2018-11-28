@@ -8,6 +8,7 @@ public class HabitCellModel extends ViewModel {
     private String time;
     private boolean checked;
     private int streakCounter;
+    private String dateLastChecked;
 
     public HabitCellModel(HabitModel model){
         this.habitId = model.getKey();
@@ -15,6 +16,7 @@ public class HabitCellModel extends ViewModel {
         this.time = model.getTime();
         this.checked = model.isChecked();
         this.streakCounter = model.getStreakCounter();
+        this.dateLastChecked = model.getDateLastChecked();
     }
 
     /* Getter Methods */
@@ -30,4 +32,5 @@ public class HabitCellModel extends ViewModel {
 
     public int getStreakCounter() { return streakCounter; }
 
+    public String getDateLastChecked() { return dateLastChecked; }
 }

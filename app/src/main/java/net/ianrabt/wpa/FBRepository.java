@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,6 +27,7 @@ import net.ianrabt.wpa.views.HabitsActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,8 +128,15 @@ public class FBRepository{
     public void incrementStreak(String habitId, Integer currentStreakValue, String day){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         int newStreakValue = currentStreakValue+1;
+
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat spf= new SimpleDateFormat("yyyyMMdd");
+        String date = spf.format(today);
+
         String userId = currentUser.getUid();
         mDatabase.child("userhabits").child(userId).child(day).child(habitId).child("streakCounter").setValue(newStreakValue);
+        mDatabase.child("userhabits").child(userId).child(day).child(habitId).child("checked").setValue(true);
+        mDatabase.child("userhabits").child(userId).child(day).child(habitId).child("dateLastChecked").setValue(date);
         mDatabase.child("habits").child(habitId).child("streakCounter").setValue(newStreakValue);
 
     }

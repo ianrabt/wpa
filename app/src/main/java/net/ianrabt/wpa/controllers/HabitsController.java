@@ -47,9 +47,11 @@ public class HabitsController {
         activity.startActivity(newActivity);
     }
 
-    public void incrementStreak(String habitId, Integer currentStreakValue){
-        String day = Integer.toString(sCalendar.get(Calendar.DAY_OF_WEEK));
-        mRepository.incrementStreak(habitId, currentStreakValue, day);
+    public void incrementStreak(String habitId, Integer currentStreakValue, boolean isChecked){
+        if(isChecked) {
+            String day = Integer.toString(sCalendar.get(Calendar.DAY_OF_WEEK));
+            mRepository.incrementStreak(habitId, currentStreakValue, day);
+        }
     }
 
 }
