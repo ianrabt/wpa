@@ -104,6 +104,7 @@ public class CreateHabitController {
                 lon = coord.longitude;
                 String toastMsg = String.format("Place: %s", place.getName());
                 Toast.makeText(activity, toastMsg, Toast.LENGTH_LONG).show();
+                activity.addLocation.setText("Location Added");
             }
         }
     }
@@ -117,7 +118,7 @@ public class CreateHabitController {
         mTimePicker = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                activity.timeText.setText( selectedHour + ":" + selectedMinute);
+                activity.timeText.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
             }
         }, hour, minute, true);//Yes 24 hour time
         mTimePicker.setTitle("Select Time");
