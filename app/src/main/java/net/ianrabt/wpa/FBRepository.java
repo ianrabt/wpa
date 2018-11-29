@@ -52,10 +52,15 @@ public class FBRepository{
         String key = mDatabase.child("habits").push().getKey();
         HabitModel habit = new HabitModel(key, id, author, habitName, repeatsOnDays, time, lat, lon);
         Map<String, Object> habitValues = habit.toMap();
+        Map<String, Object> data = new HashMap<>();
+        data.put("daysPerWeek", repeatsOnDays.size());
+        data.put("completions", 0);
+        data.put("dateCreated", habit.getDateCreated());
 
 
         Map<String, Object>child = new HashMap<String, Object>();
         child.put("/habits/" + key, habitValues);
+        child.put("/data/" + id + "/" + key, data);
 
         //update the days for which these habits go under
         List<Integer> days = habit.getRepeatsOnDays();
@@ -131,6 +136,7 @@ public class FBRepository{
         String userId = currentUser.getUid();
         DatabaseReference userHabitChild = mDatabase.child("userhabits").child(userId).child(day).child(habitId);
         DatabaseReference habitChild = mDatabase.child("habits").child(habitId);
+        DatabaseReference dataChild = mDatabase.child("data").child(userId).child(habitId);
 
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat spf= new SimpleDateFormat("yyyyMMdd");
@@ -147,6 +153,7 @@ public class FBRepository{
         userHabitChild.child("streakCounter").setValue(newStreakValue);
         userHabitChild.child("dateLastChecked").setValue(date);
         habitChild.child("streakCounter").setValue(newStreakValue);
+        dataChild.child("completions").setValue(newStreakValue);
 
     }
 
