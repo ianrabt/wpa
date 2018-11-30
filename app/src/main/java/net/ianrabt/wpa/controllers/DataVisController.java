@@ -20,7 +20,7 @@ public class DataVisController {
 
     DataVisController(DataVisFragment fragment) {
         this.fragment = fragment;
-        mRepository = new FBRepository();
-        mRepository.setDelegate(fragment);
+        //mRepository = new FBRepository();
+        //mRepository.setDelegate(fragment);
     }
 }

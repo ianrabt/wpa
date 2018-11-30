@@ -26,9 +26,6 @@ import java.util.List;
  */
 public class DataVisFragment extends Fragment implements FBRepositoryDelegate {
 
-    public DataVisFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,7 +54,7 @@ public class DataVisFragment extends Fragment implements FBRepositoryDelegate {
         repo.getHabits();
 
         entries.add(new PieEntry(30f, "Thirty Percent"));
-        entries.add(new PieEntry(50f, "Seventy Percent yoooo"));
+        entries.add(new PieEntry(50f, "fifty Percent yoooo"));
         entries.add(new PieEntry(20f, "nahhh this is twenty"));
         // ...
         // TODO use actual data
