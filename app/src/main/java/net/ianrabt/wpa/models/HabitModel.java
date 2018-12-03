@@ -50,7 +50,7 @@ public class HabitModel {
             this.lon = lon;
         }
         Date initialDate = (new GregorianCalendar(2000 , Calendar.JANUARY, 1)).getTime();
-        SimpleDateFormat spf= new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat spf= new SimpleDateFormat("yyyy-MM-dd");
         this.dateLastChecked = spf.format(initialDate);
         this.dateCreated = Calendar.getInstance().getTimeInMillis();
     }

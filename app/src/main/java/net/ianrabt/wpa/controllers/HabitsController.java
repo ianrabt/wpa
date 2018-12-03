@@ -10,14 +10,17 @@ import net.ianrabt.wpa.views.CreateHabitActivity;
 import net.ianrabt.wpa.views.HabitTodoFragment;
 import net.ianrabt.wpa.views.HabitsActivity;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class HabitsController {
 
     private FBRepository mRepository;
-    private Calendar sCalendar = Calendar.getInstance();
+    private LocalDate now = LocalDate.now();
     public ArrayList<HabitCellModel> habitsList = new ArrayList<HabitCellModel>();
     private HabitTodoFragment fragment;
     private HabitsActivity activity;
@@ -30,7 +33,7 @@ public class HabitsController {
     }
 
     public void queryHabits(){
-        String day = Integer.toString(sCalendar.get(Calendar.DAY_OF_WEEK));
+        String day = Integer.toString(now.getDayOfWeek().getValue());
         mRepository.getHabitsByDay(day);
     }
 
@@ -41,7 +44,7 @@ public class HabitsController {
     }
 
     public String getDay(){
-        return sCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+        return now.getDayOfWeek().name();
     }
 
     public void segueToCreateHabitActivity(){
@@ -49,9 +52,12 @@ public class HabitsController {
         fragment.getActivity().startActivity(newActivity);
     }
 
-    public void updateStreak(String habitId, Integer currentStreakValue, boolean increment){
-        String day = Integer.toString(sCalendar.get(Calendar.DAY_OF_WEEK));
-        mRepository.updateStreak(habitId, currentStreakValue, day, increment);
+    public void updateCounts(String habitId, Integer currentStreakValue, boolean increment, List<Integer> repeatDays){
+        mRepository.updateCounts(habitId, currentStreakValue, increment, repeatDays);
+    }
+
+    public boolean validateStreak(String habitId, List<Integer> repeatDays, String dateLastChecked){
+        return mRepository.validateStreak(habitId, repeatDays, dateLastChecked);
     }
 
 }
