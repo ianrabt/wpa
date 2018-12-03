@@ -184,6 +184,7 @@ public class FBRepository{
         dataChild.child("completions").setValue(newCompletionValue);
     }
 
+    //return true if the streak does not need to be reset
     public boolean validateStreak(String habitId, List<Integer> repeatDays, String lastChecked){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = currentUser.getUid();
@@ -201,11 +202,8 @@ public class FBRepository{
         LocalDate c = LocalDate.of(year,month,day);
 
         for(Integer val: repeatDays){
-            Log.d("StubbyLog", c.toString());
             LocalDate compareDate = c.with(TemporalAdjusters.previousOrSame(DayOfWeek.of(val)));
-            Log.d("StubbyLog", compareDate.toString());
             if( c == compareDate){
-                Log.d("StubbyLog", "found date");
                 return true;
             }
         }
