@@ -52,6 +52,8 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
     public void setChecked(int position, boolean isChecked){ mDataset.get(position).setChecked(isChecked); }
     public void setStreakValue(int position, int value){ mDataset.get(position).setStreakCounter(value); }
     public String getDateLastChecked(int position) { return mDataset.get(position).getDateLastChecked();}
+    public Integer getCompletionValue(int position) { return mDataset.get(position).getCompletionCount(); }
+    public void setCompletionValue(int position, int value) { mDataset.get(position).setCompletionCount(value);}
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder( MyViewHolder holder, final int position) {
@@ -71,6 +73,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
             setChecked(position, false);
             if(!isValid){
                 holder.mStreak.setText("0");
+                setStreakValue(position, 0);
             }
         }
 
@@ -107,6 +110,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
             Integer position = (Integer) mPosition;
             String checkedHabitId = getHabitId(position);
             Integer streakNum = getStreak(position);
+            Integer completionValue = getCompletionValue(position);
             boolean isChecked = isChecked(position);
             List<Integer> repeatDays = getRepeatDays(position);
             if (!isChecked){
@@ -114,21 +118,23 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
                 mStreak.setText(Integer.toString(newStreak));
                 setChecked(position, true);
                 setStreakValue(position,newStreak);
-                mController.updateCounts(checkedHabitId, streakNum, true, repeatDays);
+                mController.updateCounts(checkedHabitId, streakNum, completionValue,true, repeatDays);
+                setCompletionValue(position, completionValue+1);
             }
             else if (isChecked){
                 int newStreak = streakNum - 1;
                 mStreak.setText(Integer.toString(newStreak));
                 setStreakValue(position, newStreak);
                 setChecked(position,false);
-                mController.updateCounts(checkedHabitId, streakNum, false, repeatDays);
+                mController.updateCounts(checkedHabitId, streakNum, completionValue, false, repeatDays);
+                setCompletionValue(position, completionValue-1);
             }
         }
     }
 
     public static String getCurrentDay() {
         Date today = Calendar.getInstance().getTime();
-        SimpleDateFormat spf= new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat spf= new SimpleDateFormat("yyyy-MM-dd");
         String date = spf.format(today);
         return date;
     }

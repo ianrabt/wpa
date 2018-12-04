@@ -52,8 +52,11 @@ public class HabitsController {
         fragment.getActivity().startActivity(newActivity);
     }
 
-    public void updateCounts(String habitId, Integer currentStreakValue, boolean increment, List<Integer> repeatDays){
-        mRepository.updateCounts(habitId, currentStreakValue, increment, repeatDays);
+    public void updateCounts(String habitId, Integer currentStreakValue,
+                             Integer currentCompletionValue, boolean increment,
+                             List<Integer> repeatDays){
+        mRepository.updateCounts(habitId, currentStreakValue, currentCompletionValue,
+                increment, repeatDays);
     }
 
     public boolean validateStreak(String habitId, List<Integer> repeatDays, String dateLastChecked){

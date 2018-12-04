@@ -137,8 +137,9 @@ public class FBRepository{
     }
 
     //if increment is true, then increment the streak counter, otherwise decrement the streak counter
-    public void updateCounts(String habitId, Integer currentStreakValue, boolean increment,
-                            List<Integer> repeatDays){
+    public void updateCounts(String habitId, Integer currentStreakValue,
+                             Integer currentCompletionValue, boolean increment,
+                             List<Integer> repeatDays){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = currentUser.getUid();
         List<DatabaseReference> userHabitChildren = new ArrayList<>();
@@ -154,11 +155,11 @@ public class FBRepository{
         String date = spf.format(today);
 
         if(increment){
-            updateCompletion(currentStreakValue+1, true, userHabitChildren,
+            updateCompletion(currentCompletionValue+1, true, userHabitChildren,
                     habitChild, dataChild, date);
             updateStreak(currentStreakValue+1, userHabitChildren, habitChild);
         } else{
-            updateCompletion(currentStreakValue-1, false, userHabitChildren,
+            updateCompletion(currentCompletionValue-1, false, userHabitChildren,
                     habitChild, dataChild, date);
             updateStreak(currentStreakValue-1, userHabitChildren, habitChild);
         }
@@ -180,8 +181,15 @@ public class FBRepository{
         for(DatabaseReference userHabitChild: userHabitChildren){
             userHabitChild.child("checked").setValue(isChecked);
             userHabitChild.child("dateLastChecked").setValue(today);
+            userHabitChild.child("completions").setValue(newCompletionValue);
         }
+        habitChild.child("completions").setValue(newCompletionValue);
+        habitChild.child("checked").setValue(isChecked);
+        habitChild.child("dateLastChecked").setValue(today);
         dataChild.child("completions").setValue(newCompletionValue);
+        dataChild.child("checked").setValue(isChecked);
+        dataChild.child("dateLastChecked").setValue(today);
+
     }
 
     //return true if the streak does not need to be reset
@@ -199,18 +207,32 @@ public class FBRepository{
         Integer year = Integer.parseInt(splitter[0]);
         Integer month = Integer.parseInt(splitter[1]);
         Integer day = Integer.parseInt(splitter[2]);
-        LocalDate c = LocalDate.of(year,month,day);
+        LocalDate dateLastChecked = LocalDate.of(year,month,day);
 
-        for(Integer val: repeatDays){
-            LocalDate compareDate = c.with(TemporalAdjusters.previousOrSame(DayOfWeek.of(val)));
-            if( c == compareDate){
-                return true;
-            }
+        boolean streakIsValid = dateLastCheckedIsValid(dateLastChecked, repeatDays);
+
+        if(streakIsValid){
+            return true;
         }
-        //None of the previousDays dates matches with dateLastChecked so reset the streak
+
         resetStreak(habitId, repeatDays);
         return false;
 
+    }
+
+    private Boolean dateLastCheckedIsValid(LocalDate dateLastChecked, List<Integer> repeatDays){
+        LocalDate now = LocalDate.now();
+        LocalDate max = LocalDate.of(1900, 1, 1);
+        for(Integer val: repeatDays) {
+            LocalDate compareDate = now.with(TemporalAdjusters.previous(DayOfWeek.of(val)));
+            if (compareDate.isAfter(max)) {
+                max = compareDate;
+            }
+        }
+        if(max.isEqual(dateLastChecked)) {
+            return true;
+        }
+        return false;
     }
 
     private void resetStreak(String habitId, List<Integer> repeatDays) {
