@@ -19,7 +19,7 @@
         </activity>
         <activity
             android:name=".views.HabitsActivity"
-            android:label="@string/title_activity_habits"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
@@ -27,6 +27,8 @@
             android:value="@string/api_key"/>
 
         <activity android:name=".views.CreateHabitActivity"></activity>
+
+        <activity android:name=".views.SettingsActivity"></activity>
     </application>
 
 </manifest>
