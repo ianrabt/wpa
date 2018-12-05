@@ -13,14 +13,13 @@ import java.util.Calendar;
 
 public class DataVisController {
     private FBRepository mRepository;
-    private Calendar sCalendar = Calendar.getInstance();
-    public ArrayList<HabitCellModel> habitsList = new ArrayList<HabitCellModel>();
+    private Calendar calendar = Calendar.getInstance();
     private DataVisFragment fragment;
     private HabitsActivity activity;
 
     DataVisController(DataVisFragment fragment) {
         this.fragment = fragment;
-        //mRepository = new FBRepository();
+        mRepository = new FBRepository();
         //mRepository.setDelegate(fragment);
     }
 }

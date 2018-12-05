@@ -1,18 +1,13 @@
 package net.ianrabt.wpa;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,12 +17,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import net.ianrabt.wpa.models.HabitModel;
-import net.ianrabt.wpa.views.CreateHabitActivity;
-import net.ianrabt.wpa.views.HabitsActivity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,13 +26,13 @@ import java.util.Map;
 public class FBRepository{
 
     private DatabaseReference mDatabase;
-    private FBRepositoryDelegate delegate;
+    private FBHabitDelegate delegate;
 
     public FBRepository() {
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void setDelegate(FBRepositoryDelegate delegate) {
+    public void setDelegate(FBHabitDelegate delegate) {
         this.delegate = delegate;
     }
 
@@ -128,6 +119,33 @@ public class FBRepository{
         });
 
 
+    }
+
+    public void getVisualizationData() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = currentUser.getUid();
+        Query query = mDatabase.child("data").child(userId);
+
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int numOccurances = 0;
+                int numCompletions = 0;
+                for (DataSnapshot dataVisSnapshot : dataSnapshot.getChildren()) {
+                    numCompletions += dataVisSnapshot.child("completions").getValue(Integer.class);
+                    Long dateCreated = dataVisSnapshot.child("dataCreated").getValue(Long.class);
+                    Integer daysPerWeek = dataVisSnapshot.child("daysPerWeek").getValue(Interger.class);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //log
+            }
+        });
     }
 
     //if increment is true, then increment the streak counter, otherwise decrement the streak counter

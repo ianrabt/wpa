@@ -12,11 +12,10 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.database.Query;
 
 import net.ianrabt.wpa.FBRepository;
-import net.ianrabt.wpa.FBRepositoryDelegate;
 import net.ianrabt.wpa.R;
-import net.ianrabt.wpa.models.HabitModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,14 +43,13 @@ public class DataVisFragment extends Fragment {
         chart.setData(data);
         chart.invalidate();
 
+        FBRepository fb = new FBRepository();
+        fb.getVisualizationData();
+
     }
 
     private PieDataSet createDataSet(String label) {
         List<PieEntry> entries = new ArrayList<>();
-
-        //FBRepository repo = new FBRepository();
-
-        //repo.getHabits();
 
         entries.add(new PieEntry(30f, "Thirty Percent"));
         entries.add(new PieEntry(50f, "fifty Percent yoooo"));
