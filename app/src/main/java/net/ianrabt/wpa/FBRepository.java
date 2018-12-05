@@ -139,7 +139,7 @@ public class FBRepository{
     //if increment is true, then increment the streak counter, otherwise decrement the streak counter
     public void updateCounts(String habitId, Integer currentStreakValue,
                              Integer currentCompletionValue, boolean increment,
-                             List<Integer> repeatDays){
+                             List<Integer> repeatDays, String date){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = currentUser.getUid();
         List<DatabaseReference> userHabitChildren = new ArrayList<>();
@@ -150,23 +150,31 @@ public class FBRepository{
         DatabaseReference habitChild = mDatabase.child("habits").child(habitId);
         DatabaseReference dataChild = mDatabase.child("data").child(userId).child(habitId);
 
-        Date today = Calendar.getInstance().getTime();
-        SimpleDateFormat spf= new SimpleDateFormat("yyyy-MM-dd");
-        String date = spf.format(today);
+        // For the case where the checkbox is unclicked and needs to revert to previous day
+        String newDate;
+        if (date.isEmpty()) {
+            Date today = Calendar.getInstance().getTime();
+            SimpleDateFormat spf= new SimpleDateFormat("yyyy-MM-dd");
+            newDate = spf.format(today);
+        }
+        else {
+            newDate = date;
+        }
+
 
         if(increment){
             updateCompletion(currentCompletionValue+1, true, userHabitChildren,
-                    habitChild, dataChild, date);
+                    habitChild, dataChild, newDate);
             updateStreak(currentStreakValue+1, userHabitChildren, habitChild);
         } else{
             updateCompletion(currentCompletionValue-1, false, userHabitChildren,
-                    habitChild, dataChild, date);
+                    habitChild, dataChild, newDate);
             updateStreak(currentStreakValue-1, userHabitChildren, habitChild);
         }
 
 
     }
-
+    // TODO: need to update the previous Date + day?
     private void updateStreak(int newStreakValue, List<DatabaseReference> userHabitChildren,
                               DatabaseReference habitChild){
         for(DatabaseReference userHabitChild: userHabitChildren){

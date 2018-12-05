@@ -11,6 +11,7 @@ public class HabitCellModel extends ViewModel {
     private int streakCounter;
     private int completionCount;
     private String dateLastChecked;
+    private String previousDateLastChecked;
     List<Integer> repeatDays;
 
     public HabitCellModel(HabitModel model){
@@ -20,6 +21,7 @@ public class HabitCellModel extends ViewModel {
         this.checked = model.isChecked();
         this.streakCounter = model.getStreakCounter();
         this.dateLastChecked = model.getDateLastChecked();
+        this.previousDateLastChecked = model.getPreviousDateLastChecked();
         this.repeatDays = model.getRepeatsOnDays();
         this.completionCount = model.getCompletions();
     }
@@ -48,4 +50,10 @@ public class HabitCellModel extends ViewModel {
     public int getCompletionCount() { return completionCount; }
 
     public void setCompletionCount(int completionCount) { this.completionCount = completionCount; }
+
+    public String getPreviousDateLastChecked() { return previousDateLastChecked; }
+
+    public void setPreviousDateLastChecked(String date) { this.previousDateLastChecked = date; }
+
+
 }

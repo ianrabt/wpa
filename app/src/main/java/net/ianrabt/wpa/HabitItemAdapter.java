@@ -52,6 +52,8 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
     public void setChecked(int position, boolean isChecked){ mDataset.get(position).setChecked(isChecked); }
     public void setStreakValue(int position, int value){ mDataset.get(position).setStreakCounter(value); }
     public String getDateLastChecked(int position) { return mDataset.get(position).getDateLastChecked();}
+    public String getPreviousDateLastChecked(int position) { return mDataset.get(position).getPreviousDateLastChecked(); }
+    public void setPreviousDateLastChecked(int position, String date) { mDataset.get(position).setPreviousDateLastChecked(date); }
     public Integer getCompletionValue(int position) { return mDataset.get(position).getCompletionCount(); }
     public void setCompletionValue(int position, int value) { mDataset.get(position).setCompletionCount(value);}
     // Replace the contents of a view (invoked by the layout manager)
@@ -111,23 +113,25 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
             String checkedHabitId = getHabitId(position);
             Integer streakNum = getStreak(position);
             Integer completionValue = getCompletionValue(position);
-            boolean isChecked = isChecked(position);
+            boolean isChecked = isChecked(position); // I want to know if this is the state before click or not...
             List<Integer> repeatDays = getRepeatDays(position);
+            String date = getPreviousDateLastChecked(position);
             if (!isChecked){
                 int newStreak = streakNum + 1;
                 mStreak.setText(Integer.toString(newStreak));
                 setChecked(position, true);
                 setStreakValue(position,newStreak);
-                mController.updateCounts(checkedHabitId, streakNum, completionValue,true, repeatDays);
+                mController.updateCounts(checkedHabitId, streakNum, completionValue,true, repeatDays, "");
                 setCompletionValue(position, completionValue+1);
             }
             else if (isChecked){
                 int newStreak = streakNum - 1;
+                int newCompletionValue = completionValue - 1;
                 mStreak.setText(Integer.toString(newStreak));
                 setStreakValue(position, newStreak);
                 setChecked(position,false);
-                mController.updateCounts(checkedHabitId, streakNum, completionValue, false, repeatDays);
-                setCompletionValue(position, completionValue-1);
+                mController.updateCounts(checkedHabitId, streakNum, completionValue, false, repeatDays, date);
+                setCompletionValue(position, newCompletionValue);
             }
         }
     }
