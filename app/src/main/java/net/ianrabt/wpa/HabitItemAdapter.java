@@ -11,9 +11,13 @@ import android.widget.TextView;
 
 import net.ianrabt.wpa.models.HabitCellModel;
 import net.ianrabt.wpa.controllers.HabitsController;
+import net.ianrabt.wpa.models.HabitModel;
 import net.ianrabt.wpa.views.HabitsActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyViewHolder> {
     private ArrayList<HabitCellModel> mDataset;
@@ -43,14 +47,31 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
         return mDataset.get(position).getStreakCounter();
     }
 
+    public boolean isChecked(int position) { return mDataset.get(position).isChecked(); }
+
+    public void setChecked(int position, boolean isChecked){
+        mDataset.get(position).setChecked(isChecked);
+    }
+
+    public void setStreakValue(int position, int value){
+        mDataset.get(position).setStreakCounter(value);
+    }
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder( MyViewHolder holder, final int position) {
         // holder is the UI element, position relates to the element in the list of tasks in the recycler view
-        holder.mHabitName.setText((CharSequence) mDataset.get(position).getHabitName());
-        holder.mHabitTime.setText(mDataset.get(position).getTime());
-        holder.mStreak.setText(String.valueOf(mDataset.get(position).getStreakCounter()));
+        HabitCellModel cell = mDataset.get(position);
+        holder.mHabitName.setText((CharSequence) cell.getHabitName());
+        holder.mHabitTime.setText(cell.getTime());
+        holder.mStreak.setText(String.valueOf(cell.getStreakCounter()));
         holder.mPosition = position;
+        if(getCurrentDay().compareTo(cell.getDateLastChecked()) == 0){
+            boolean isChecked = cell.isChecked();
+            holder.mCheckBox.setChecked(isChecked);
+        } else {
+            setChecked(position, false);
+        }
+
 
     }
 
@@ -84,10 +105,29 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
             Integer position = (Integer) mPosition;
             String checkedHabitId = getHabitId(position);
             Integer streakNum = getStreak(position);
-            int newStreak = streakNum + 1;
-            mStreak.setText(Integer.toString(newStreak));
-            mController.incrementStreak(checkedHabitId, streakNum);
+            boolean isChecked = isChecked(position);
+            if (!isChecked){
+                int newStreak = streakNum + 1;
+                mStreak.setText(Integer.toString(newStreak));
+                setChecked(position, true);
+                setStreakValue(position,newStreak);
+                mController.updateStreak(checkedHabitId, streakNum, true);
+            }
+            else if (isChecked){
+                int newStreak = streakNum - 1;
+                mStreak.setText(Integer.toString(newStreak));
+                setStreakValue(position, newStreak);
+                setChecked(position,false);
+                mController.updateStreak(checkedHabitId, streakNum, false);
+            }
         }
+    }
+
+    public static String getCurrentDay() {
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat spf= new SimpleDateFormat("yyyyMMdd");
+        String date = spf.format(today);
+        return date;
     }
 
 

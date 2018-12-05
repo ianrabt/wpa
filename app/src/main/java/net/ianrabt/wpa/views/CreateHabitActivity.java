@@ -34,6 +34,8 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
     public CheckBox thursday;
     public CheckBox friday;
     public CheckBox saturday;
+    public Button addLocation;
+    public Button create;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +61,8 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void setButtons(){
-        Button create = (Button) findViewById(R.id.create);
-        Button addLocation = (Button) findViewById(R.id.add_location);
+        create = (Button) findViewById(R.id.create);
+        addLocation = (Button) findViewById(R.id.add_location);
         addLocation.setOnClickListener(this);
         create.setOnClickListener(this);
     }

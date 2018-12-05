@@ -4,8 +4,11 @@ import android.support.annotation.Nullable;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.Exclude;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +25,8 @@ public class HabitModel {
     private boolean checked;
     private double lat;
     private double lon;
+    private String dateLastChecked;
+    long dateCreated;
 
 
 
@@ -44,6 +49,10 @@ public class HabitModel {
             this.lat = lat;
             this.lon = lon;
         }
+        Date initialDate = (new GregorianCalendar(2000 , Calendar.JANUARY, 1)).getTime();
+        SimpleDateFormat spf= new SimpleDateFormat("yyyyMMdd");
+        this.dateLastChecked = spf.format(initialDate);
+        this.dateCreated = Calendar.getInstance().getTimeInMillis();
     }
     
 
@@ -80,6 +89,10 @@ public class HabitModel {
 
     public double getLon() { return lon; }
 
+    public String getDateLastChecked() { return dateLastChecked; }
+
+    public long getDateCreated() { return dateCreated; }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
@@ -94,6 +107,8 @@ public class HabitModel {
         result.put("checked", checked);
         result.put("lat",lat);
         result.put("lon", lon);
+        result.put("dateLastChecked", dateLastChecked);
+        result.put("dateCreated", dateCreated);
 
         return result;
     }
