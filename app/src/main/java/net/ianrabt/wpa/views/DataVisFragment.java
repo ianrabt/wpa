@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DataVisFragment extends Fragment implements FBRepositoryDelegate {
+public class DataVisFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,9 +49,9 @@ public class DataVisFragment extends Fragment implements FBRepositoryDelegate {
     private PieDataSet createDataSet(String label) {
         List<PieEntry> entries = new ArrayList<>();
 
-        FBRepository repo = new FBRepository();
+        //FBRepository repo = new FBRepository();
 
-        repo.getHabits();
+        //repo.getHabits();
 
         entries.add(new PieEntry(30f, "Thirty Percent"));
         entries.add(new PieEntry(50f, "fifty Percent yoooo"));
@@ -60,15 +60,5 @@ public class DataVisFragment extends Fragment implements FBRepositoryDelegate {
         // TODO use actual data
 
         return new PieDataSet(entries, label);
-    }
-
-    @Override
-    public void handleHabitResponse(ArrayList<HabitModel> habitResponse) {
-        //TODO WHAT DOES THIS DO????
-    }
-
-    @Override
-    public void render() {
-        //TODO WHAT DOES THIS DO????
     }
 }
