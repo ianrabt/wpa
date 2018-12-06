@@ -31,11 +31,6 @@
 
         <activity android:name=".views.CreateHabitActivity" />
 
-        <activity
-            android:name=".views.DataVisActivity"
-            android:label="@string/title_activity_data_vis"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
         <activity android:name=".views.SettingsActivity"/>
     </application>
 

@@ -31,7 +31,7 @@ public class HabitTodoFragment extends Fragment implements FBHabitDelegate, View
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.activity_habits, container, false);
+        View root = inflater.inflate(R.layout.fragment_habit_todo, container, false);
 
         return root;
     }
