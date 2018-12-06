@@ -14,8 +14,10 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.Query;
 
+import net.ianrabt.wpa.FBDataDelegate;
 import net.ianrabt.wpa.FBRepository;
 import net.ianrabt.wpa.R;
+import net.ianrabt.wpa.controllers.DataVisController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,9 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DataVisFragment extends Fragment {
+public class DataVisFragment extends Fragment implements FBDataDelegate {
+    DataVisController controller;
+    PieChart chart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,30 +37,30 @@ public class DataVisFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
-        PieChart chart = (PieChart) getView().findViewById(R.id.chart);
+        controller = new DataVisController(this);
+        chart = (PieChart) getView().findViewById(R.id.chart);
+    }
 
-        PieDataSet set = createDataSet("Pie Chart"); // TODO come up with better name
+    @Override
+    public void handleData(double completionPercentage) {
+        PieDataSet set = createDataSet("Habit Completion Percentage", completionPercentage);
         set.setColors(ColorTemplate.MATERIAL_COLORS);
-        // TODO add more styling options
 
         PieData data = new PieData(set);
         chart.setData(data);
-        chart.invalidate();
-
-        FBRepository fb = new FBRepository();
-        fb.getVisualizationData();
-
     }
 
-    private PieDataSet createDataSet(String label) {
+    private PieDataSet createDataSet(String label, double completionPercentage) {
         List<PieEntry> entries = new ArrayList<>();
 
-        entries.add(new PieEntry(30f, "Thirty Percent"));
-        entries.add(new PieEntry(50f, "fifty Percent yoooo"));
-        entries.add(new PieEntry(20f, "nahhh this is twenty"));
-        // ...
-        // TODO use actual data
+        entries.add(new PieEntry((float) completionPercentage, "Completed"));
+        entries.add(new PieEntry((float) (1 - completionPercentage), "Skipped"));
 
         return new PieDataSet(entries, label);
+    }
+
+    @Override
+    public void render() {
+        chart.invalidate();
     }
 }

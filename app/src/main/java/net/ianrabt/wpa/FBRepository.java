@@ -22,18 +22,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class FBRepository{
 
     private DatabaseReference mDatabase;
-    private FBHabitDelegate delegate;
+    private FBHabitDelegate habitDelegate;
+    private FBDataDelegate dataDelegate;
 
     public FBRepository() {
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void setDelegate(FBHabitDelegate delegate) {
-        this.delegate = delegate;
+    public void setDataDelegate(FBDataDelegate dataDelegate) {
+        this.dataDelegate = dataDelegate;
+    }
+
+    public void setHabitDelegate(FBHabitDelegate habitDelegate) {
+        this.habitDelegate = habitDelegate;
     }
 
     public void createHabit(String habitName, List<Integer> repeatsOnDays, String time, Double lat, Double lon){
@@ -79,7 +85,7 @@ public class FBRepository{
                     List<Integer> days = habitSnapshot.child("repeats_on_days").getValue(t);
                     habitList.add(child);
                 }
-                delegate.handleHabitResponse(habitList);
+                habitDelegate.handleHabitResponse(habitList);
             }
 
             @Override
@@ -108,8 +114,8 @@ public class FBRepository{
                     List<Integer> days = habitSnapshot.child("repeats_on_days").getValue(t);
                     habitList.add(child);
                 }
-                delegate.handleHabitResponse(habitList);
-                delegate.render();
+                habitDelegate.handleHabitResponse(habitList);
+                habitDelegate.render();
             }
 
             @Override
@@ -122,6 +128,8 @@ public class FBRepository{
     }
 
     public void getVisualizationData() {
+        if(dataDelegate == null)
+            return;
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = currentUser.getUid();
         Query query = mDatabase.child("data").child(userId);
@@ -130,22 +138,45 @@ public class FBRepository{
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int numOccurances = 0;
-                int numCompletions = 0;
+                double numOccurrences = 0;
+                double numCompletions = 0;
+                Date today = Calendar.getInstance().getTime();
+
                 for (DataSnapshot dataVisSnapshot : dataSnapshot.getChildren()) {
                     numCompletions += dataVisSnapshot.child("completions").getValue(Integer.class);
-                    Long dateCreated = dataVisSnapshot.child("dataCreated").getValue(Long.class);
-                    Integer daysPerWeek = dataVisSnapshot.child("daysPerWeek").getValue(Interger.class);
+
+                    Long milliCreated = dataVisSnapshot.child("dateCreated").getValue(Long.class);
+                    Date dateCreated = new Date(milliCreated);
+                    Integer daysPerWeek = dataVisSnapshot.child("daysPerWeek").getValue(Integer.class);
 
 
+                    double numWeeksSinceHabitCreated = getDateDiff(dateCreated, today, TimeUnit.DAYS)/7.0;
+                    numOccurrences += daysPerWeek * numWeeksSinceHabitCreated;
                 }
-            }
+                //percentage of completion for all habits = numCompletions/numOccurrences
 
+                double completionPercentage = numCompletions/numOccurrences;
+
+                dataDelegate.handleData(completionPercentage);
+                dataDelegate.render();
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //log
             }
         });
+    }
+
+    /**
+     * Get a diff between two dates
+     * @param date1 the oldest date
+     * @param date2 the newest date
+     * @param timeUnit the unit in which you want the diff
+     * @return the diff value, in the provided unit
+     */
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
     }
 
     //if increment is true, then increment the streak counter, otherwise decrement the streak counter

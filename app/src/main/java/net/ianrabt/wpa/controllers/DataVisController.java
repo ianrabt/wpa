@@ -17,9 +17,10 @@ public class DataVisController {
     private DataVisFragment fragment;
     private HabitsActivity activity;
 
-    DataVisController(DataVisFragment fragment) {
+    public DataVisController(DataVisFragment fragment) {
         this.fragment = fragment;
         mRepository = new FBRepository();
-        //mRepository.setDelegate(fragment);
+        mRepository.setDataDelegate(fragment);
+        mRepository.getVisualizationData();
     }
 }

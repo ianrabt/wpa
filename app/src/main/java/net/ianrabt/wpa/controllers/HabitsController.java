@@ -3,7 +3,6 @@ package net.ianrabt.wpa.controllers;
 import android.content.Intent;
 
 import net.ianrabt.wpa.FBRepository;
-import net.ianrabt.wpa.Repository;
 import net.ianrabt.wpa.models.HabitCellModel;
 import net.ianrabt.wpa.models.HabitModel;
 import net.ianrabt.wpa.views.CreateHabitActivity;
@@ -25,7 +24,7 @@ public class HabitsController {
     public HabitsController(HabitTodoFragment fragment){
         this.fragment = fragment;
         mRepository = new FBRepository();
-        mRepository.setDelegate(fragment);
+        mRepository.setHabitDelegate(fragment);
 
     }
 
