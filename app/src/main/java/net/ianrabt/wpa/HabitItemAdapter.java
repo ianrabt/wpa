@@ -113,15 +113,16 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
             String checkedHabitId = getHabitId(position);
             Integer streakNum = getStreak(position);
             Integer completionValue = getCompletionValue(position);
-            boolean isChecked = isChecked(position); // I want to know if this is the state before click or not...
+            boolean isChecked = isChecked(position);
             List<Integer> repeatDays = getRepeatDays(position);
             String date = getPreviousDateLastChecked(position);
+            String newPreviousDate = getDateLastChecked(position);
             if (!isChecked){
                 int newStreak = streakNum + 1;
                 mStreak.setText(Integer.toString(newStreak));
                 setChecked(position, true);
                 setStreakValue(position,newStreak);
-                mController.updateCounts(checkedHabitId, streakNum, completionValue,true, repeatDays, "");
+                mController.updateCounts(checkedHabitId, streakNum, completionValue,true, repeatDays, "", newPreviousDate);
                 setCompletionValue(position, completionValue+1);
             }
             else if (isChecked){
@@ -130,7 +131,7 @@ public class HabitItemAdapter extends RecyclerView.Adapter<HabitItemAdapter.MyVi
                 mStreak.setText(Integer.toString(newStreak));
                 setStreakValue(position, newStreak);
                 setChecked(position,false);
-                mController.updateCounts(checkedHabitId, streakNum, completionValue, false, repeatDays, date);
+                mController.updateCounts(checkedHabitId, streakNum, completionValue, false, repeatDays, date, newPreviousDate);
                 setCompletionValue(position, newCompletionValue);
             }
         }

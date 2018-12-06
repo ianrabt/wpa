@@ -54,9 +54,9 @@ public class HabitsController {
 
     public void updateCounts(String habitId, Integer currentStreakValue,
                              Integer currentCompletionValue, boolean increment,
-                             List<Integer> repeatDays, String date){
+                             List<Integer> repeatDays, String date, String newPreviousDate){
         mRepository.updateCounts(habitId, currentStreakValue, currentCompletionValue,
-                increment, repeatDays, date);
+                increment, repeatDays, date, newPreviousDate);
     }
 
     public boolean validateStreak(String habitId, List<Integer> repeatDays, String dateLastChecked){
