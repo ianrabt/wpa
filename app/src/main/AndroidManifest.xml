@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="net.ianrabt.wpa">
 
     <application
@@ -9,8 +10,10 @@
         android:launchMode="singleTask"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".views.LoginActivity">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".views.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +22,7 @@
         </activity>
         <activity
             android:name=".views.HabitsActivity"
-            android:label="@string/title_activity_habits"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
@@ -27,10 +30,13 @@
             android:value="@string/api_key" />
 
         <activity android:name=".views.CreateHabitActivity" />
+
         <activity
             android:name=".views.DataVisActivity"
             android:label="@string/title_activity_data_vis"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".views.SettingsActivity"/>
     </application>
 
 </manifest>
