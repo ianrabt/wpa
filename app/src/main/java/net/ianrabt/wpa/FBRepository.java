@@ -5,7 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -30,6 +35,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class FBRepository{
@@ -114,7 +120,7 @@ public class FBRepository{
                 GenericTypeIndicator<List<Integer>> t = new GenericTypeIndicator<List<Integer>>() {};
                 for (DataSnapshot habitSnapshot: dataSnapshot.getChildren()) {
                     HabitModel child = habitSnapshot.getValue(HabitModel.class);
-                    List<Integer> days = habitSnapshot.child("repeats_on_days").getValue(t);
+                    List<Integer> days = habitSnapshot.child("repeatsOnDays").getValue(t);
                     habitList.add(child);
                 }
                 delegate.handleHabitResponse(habitList);
@@ -131,31 +137,125 @@ public class FBRepository{
     }
 
     //if increment is true, then increment the streak counter, otherwise decrement the streak counter
-    public void updateStreak(String habitId, Integer currentStreakValue, String day, boolean increment){
+    public void updateCounts(String habitId, Integer currentStreakValue,
+                             Integer currentCompletionValue, boolean increment,
+                             List<Integer> repeatDays, String date){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = currentUser.getUid();
-        DatabaseReference userHabitChild = mDatabase.child("userhabits").child(userId).child(day).child(habitId);
+        List<DatabaseReference> userHabitChildren = new ArrayList<>();
+        for(Integer val : repeatDays){
+            String day = Integer.toString(val);
+            userHabitChildren.add(mDatabase.child("userhabits").child(userId).child(day).child(habitId));
+        }
         DatabaseReference habitChild = mDatabase.child("habits").child(habitId);
         DatabaseReference dataChild = mDatabase.child("data").child(userId).child(habitId);
 
-        Date today = Calendar.getInstance().getTime();
-        SimpleDateFormat spf= new SimpleDateFormat("yyyyMMdd");
-        String date = spf.format(today);
-
-        int newStreakValue;
-        if(increment){
-            newStreakValue = currentStreakValue+1;
-            userHabitChild.child("checked").setValue(true);
-        } else{
-            newStreakValue = currentStreakValue-1;
-            userHabitChild.child("checked").setValue(false);
+        // For the case where the checkbox is unclicked and needs to revert to previous day
+        String newDate;
+        if (date.isEmpty()) {
+            Date today = Calendar.getInstance().getTime();
+            SimpleDateFormat spf= new SimpleDateFormat("yyyy-MM-dd");
+            newDate = spf.format(today);
         }
-        userHabitChild.child("streakCounter").setValue(newStreakValue);
-        userHabitChild.child("dateLastChecked").setValue(date);
-        habitChild.child("streakCounter").setValue(newStreakValue);
-        dataChild.child("completions").setValue(newStreakValue);
+        else {
+            newDate = date;
+        }
+
+
+        if(increment){
+            updateCompletion(currentCompletionValue+1, true, userHabitChildren,
+                    habitChild, dataChild, newDate);
+            updateStreak(currentStreakValue+1, userHabitChildren, habitChild);
+        } else{
+            updateCompletion(currentCompletionValue-1, false, userHabitChildren,
+                    habitChild, dataChild, newDate);
+            updateStreak(currentStreakValue-1, userHabitChildren, habitChild);
+        }
+
 
     }
+    // TODO: need to update the previous Date + day?
+    private void updateStreak(int newStreakValue, List<DatabaseReference> userHabitChildren,
+                              DatabaseReference habitChild){
+        for(DatabaseReference userHabitChild: userHabitChildren){
+            userHabitChild.child("streakCounter").setValue(newStreakValue);
+        }
+        habitChild.child("streakCounter").setValue(newStreakValue);
+    }
+
+    private void updateCompletion(int newCompletionValue, boolean isChecked,
+                                  List<DatabaseReference> userHabitChildren, DatabaseReference habitChild,
+                                  DatabaseReference dataChild, String today){
+        for(DatabaseReference userHabitChild: userHabitChildren){
+            userHabitChild.child("checked").setValue(isChecked);
+            userHabitChild.child("dateLastChecked").setValue(today);
+            userHabitChild.child("completions").setValue(newCompletionValue);
+        }
+        habitChild.child("completions").setValue(newCompletionValue);
+        habitChild.child("checked").setValue(isChecked);
+        habitChild.child("dateLastChecked").setValue(today);
+        dataChild.child("completions").setValue(newCompletionValue);
+        dataChild.child("checked").setValue(isChecked);
+        dataChild.child("dateLastChecked").setValue(today);
+
+    }
+
+    //return true if the streak does not need to be reset
+    public boolean validateStreak(String habitId, List<Integer> repeatDays, String lastChecked){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = currentUser.getUid();
+        List<DatabaseReference> userHabitChildren = new ArrayList<>();
+        for(Integer val : repeatDays){
+            String day = Integer.toString(val);
+            userHabitChildren.add(mDatabase.child("userhabits").child(userId).child(day).child(habitId));
+        }
+        DatabaseReference habitChild = mDatabase.child("habits").child(habitId);
+
+        String [] splitter = lastChecked.split("-");
+        Integer year = Integer.parseInt(splitter[0]);
+        Integer month = Integer.parseInt(splitter[1]);
+        Integer day = Integer.parseInt(splitter[2]);
+        LocalDate dateLastChecked = LocalDate.of(year,month,day);
+
+        boolean streakIsValid = dateLastCheckedIsValid(dateLastChecked, repeatDays);
+
+        if(streakIsValid){
+            return true;
+        }
+
+        resetStreak(habitId, repeatDays);
+        return false;
+
+    }
+
+    private Boolean dateLastCheckedIsValid(LocalDate dateLastChecked, List<Integer> repeatDays){
+        LocalDate now = LocalDate.now();
+        LocalDate max = LocalDate.of(1900, 1, 1);
+        for(Integer val: repeatDays) {
+            LocalDate compareDate = now.with(TemporalAdjusters.previous(DayOfWeek.of(val)));
+            if (compareDate.isAfter(max)) {
+                max = compareDate;
+            }
+        }
+        if(max.isEqual(dateLastChecked)) {
+            return true;
+        }
+        return false;
+    }
+
+    private void resetStreak(String habitId, List<Integer> repeatDays) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = currentUser.getUid();
+        List<DatabaseReference> userHabitChildren = new ArrayList<>();
+        for (Integer val : repeatDays) {
+            String day = Integer.toString(val);
+            userHabitChildren.add(mDatabase.child("userhabits").child(userId).child(day).child(habitId));
+        }
+        DatabaseReference habitChild = mDatabase.child("habits").child(habitId);
+
+        updateStreak(0, userHabitChildren, habitChild);
+    }
+
 
     
 }

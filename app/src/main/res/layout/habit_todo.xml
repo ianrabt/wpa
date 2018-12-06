@@ -19,8 +19,8 @@
 
     <TextView
         android:id="@+id/habitName"
-        android:layout_width="200dp"
-        android:layout_height="35dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/habitTimeRange"
         android:layout_marginLeft="22dp"
         android:layout_marginBottom="18dp"
@@ -29,7 +29,7 @@
         android:textSize="25dp"
         android:ems="10"
         android:inputType="text"
-        android:text="HabitNamey" />
+        android:text="HabitNamey fill up the space" />
 
     <TextView
         android:id="@+id/habitTimeRange"
@@ -50,7 +50,7 @@
         android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/habitName"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="120dp"
         android:layout_marginTop="-18dp"
         android:layout_toRightOf="@+id/habitTimeRange"
         android:layout_weight="1"
