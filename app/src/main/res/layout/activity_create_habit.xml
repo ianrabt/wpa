@@ -15,6 +15,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Habit Name"
+        android:maxLength="27"
         android:inputType="text|textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

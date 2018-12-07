@@ -139,7 +139,7 @@ public class FBRepository{
     //if increment is true, then increment the streak counter, otherwise decrement the streak counter
     public void updateCounts(String habitId, Integer currentStreakValue,
                              Integer currentCompletionValue, boolean increment,
-                             List<Integer> repeatDays, String date){
+                             List<Integer> repeatDays, String date, String previousDay){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = currentUser.getUid();
         List<DatabaseReference> userHabitChildren = new ArrayList<>();
@@ -164,17 +164,17 @@ public class FBRepository{
 
         if(increment){
             updateCompletion(currentCompletionValue+1, true, userHabitChildren,
-                    habitChild, dataChild, newDate);
+                    habitChild, dataChild, newDate, previousDay);
             updateStreak(currentStreakValue+1, userHabitChildren, habitChild);
         } else{
             updateCompletion(currentCompletionValue-1, false, userHabitChildren,
-                    habitChild, dataChild, newDate);
+                    habitChild, dataChild, newDate, previousDay);
             updateStreak(currentStreakValue-1, userHabitChildren, habitChild);
         }
 
 
     }
-    // TODO: need to update the previous Date + day?
+
     private void updateStreak(int newStreakValue, List<DatabaseReference> userHabitChildren,
                               DatabaseReference habitChild){
         for(DatabaseReference userHabitChild: userHabitChildren){
@@ -185,14 +185,21 @@ public class FBRepository{
 
     private void updateCompletion(int newCompletionValue, boolean isChecked,
                                   List<DatabaseReference> userHabitChildren, DatabaseReference habitChild,
-                                  DatabaseReference dataChild, String today){
+                                  DatabaseReference dataChild, String today, String previousDay){
         for(DatabaseReference userHabitChild: userHabitChildren){
             userHabitChild.child("checked").setValue(isChecked);
+            if (isChecked){
+                userHabitChild.child("previousDateLastChecked").setValue(previousDay);
+            }
             userHabitChild.child("dateLastChecked").setValue(today);
             userHabitChild.child("completions").setValue(newCompletionValue);
         }
         habitChild.child("completions").setValue(newCompletionValue);
         habitChild.child("checked").setValue(isChecked);
+        if (isChecked){
+            habitChild.child("previousDateLastChecked").setValue(previousDay);
+            dataChild.child("previousDateLastChecked").setValue(previousDay);
+        }
         habitChild.child("dateLastChecked").setValue(today);
         dataChild.child("completions").setValue(newCompletionValue);
         dataChild.child("checked").setValue(isChecked);
