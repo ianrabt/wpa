@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="net.ianrabt.wpa">
 
     <application
@@ -9,7 +10,8 @@
         android:launchMode="singleTask"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".views.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -25,11 +27,11 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/api_key"/>
+            android:value="@string/api_key" />
 
-        <activity android:name=".views.CreateHabitActivity"></activity>
+        <activity android:name=".views.CreateHabitActivity" />
 
-        <activity android:name=".views.SettingsActivity"></activity>
+        <activity android:name=".views.SettingsActivity"/>
     </application>
 
 </manifest>

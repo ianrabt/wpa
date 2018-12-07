@@ -4,7 +4,7 @@ import net.ianrabt.wpa.models.HabitModel;
 
 import java.util.ArrayList;
 
-public interface FBRepositoryDelegate {
+public interface FBHabitDelegate {
 
     public void handleHabitResponse(ArrayList<HabitModel> habitResponse);
     public void render();

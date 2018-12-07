@@ -10,14 +10,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
-import net.ianrabt.wpa.FBRepositoryDelegate;
+import net.ianrabt.wpa.FBHabitDelegate;
 import net.ianrabt.wpa.HabitItemAdapter;
 import net.ianrabt.wpa.R;
 import net.ianrabt.wpa.controllers.HabitsController;
 import net.ianrabt.wpa.models.HabitModel;
 import java.util.ArrayList;
 
-public class HabitTodoFragment extends Fragment implements FBRepositoryDelegate, View.OnClickListener {
+public class HabitTodoFragment extends Fragment implements FBHabitDelegate, View.OnClickListener {
 
     RecyclerView recyclerView;
     private TextView dayTextView;
@@ -31,7 +31,7 @@ public class HabitTodoFragment extends Fragment implements FBRepositoryDelegate,
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.activity_habits, container, false);
+        View root = inflater.inflate(R.layout.fragment_habit_todo, container, false);
 
         return root;
     }

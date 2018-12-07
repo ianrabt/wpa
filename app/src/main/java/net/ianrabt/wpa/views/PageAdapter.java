@@ -20,7 +20,7 @@ public class PageAdapter extends FragmentStatePagerAdapter {
                 HabitTodoFragment tab1 = new HabitTodoFragment();
                 return tab1;
             case 1:
-                DataVisualizationFragment tab2 = new DataVisualizationFragment();
+                DataVisFragment tab2 = new DataVisFragment();
                 return tab2;
             default:
                 return null;
