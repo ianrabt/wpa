@@ -17,7 +17,7 @@ public class PageAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                HabitTodoFragment tab1 = new HabitTodoFragment();
+                HabitsFragment tab1 = new HabitsFragment();
                 return tab1;
             case 1:
                 DataVisFragment tab2 = new DataVisFragment();

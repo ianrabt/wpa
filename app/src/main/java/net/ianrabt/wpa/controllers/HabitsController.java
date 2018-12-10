@@ -6,8 +6,8 @@ import net.ianrabt.wpa.FBRepository;
 import net.ianrabt.wpa.models.HabitCellModel;
 import net.ianrabt.wpa.models.HabitModel;
 import net.ianrabt.wpa.views.CreateHabitActivity;
-import net.ianrabt.wpa.views.HabitTodoFragment;
 import net.ianrabt.wpa.views.HabitsActivity;
+import net.ianrabt.wpa.views.HabitsFragment;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -21,10 +21,10 @@ public class HabitsController {
     private FBRepository mRepository;
     private LocalDate now = LocalDate.now();
     public ArrayList<HabitCellModel> habitsList = new ArrayList<HabitCellModel>();
-    private HabitTodoFragment fragment;
+    private HabitsFragment fragment;
     private HabitsActivity activity;
 
-    public HabitsController(HabitTodoFragment fragment){
+    public HabitsController(HabitsFragment fragment){
         this.fragment = fragment;
         mRepository = new FBRepository();
         mRepository.setHabitDelegate(fragment);

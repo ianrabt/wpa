@@ -17,7 +17,7 @@ import net.ianrabt.wpa.controllers.HabitsController;
 import net.ianrabt.wpa.models.HabitModel;
 import java.util.ArrayList;
 
-public class HabitTodoFragment extends Fragment implements FBHabitDelegate, View.OnClickListener {
+public class HabitsFragment extends Fragment implements FBHabitDelegate, View.OnClickListener {
 
     RecyclerView recyclerView;
     private TextView dayTextView;
@@ -91,14 +91,5 @@ public class HabitTodoFragment extends Fragment implements FBHabitDelegate, View
         }
     }
 
-//    public void onCheckboxClicked(View view) {
-//        boolean checked = ((CheckBox) view).isChecked();
-//        mRepository.incrementStreak();
-//        // Update streak counter
-//        if (checked) {
-//            // TODO: send this information back to the database
-//            // TODO: update the UI
-//        }
-//
-//    }
+
 }

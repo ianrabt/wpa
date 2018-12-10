@@ -5,7 +5,6 @@ import android.provider.ContactsContract;
 import net.ianrabt.wpa.FBRepository;
 import net.ianrabt.wpa.models.HabitCellModel;
 import net.ianrabt.wpa.views.DataVisFragment;
-import net.ianrabt.wpa.views.HabitTodoFragment;
 import net.ianrabt.wpa.views.HabitsActivity;
 
 import java.util.ArrayList;
